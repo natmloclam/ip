@@ -70,6 +70,7 @@ public class Fish {
         System.out.println(BAR);
     }
 
+    // Level-3
     public static void markTask(int index) {
         tasks[index].setAsDone();
     }
@@ -78,6 +79,11 @@ public class Fish {
         tasks[index].setAsNotDone();
     }
 
+    /**
+     * takes in a String, splits them at spaces and returns a String array
+     * @param sentence
+     * @return String[] array
+     */
     public static String[] filterCommand(String sentence) {
         String[] words = sentence.split(" ");
         String[] result = new String[words.length];
