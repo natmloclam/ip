@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Fish {
@@ -18,7 +19,6 @@ public class Fish {
                 Why are you repeating after me?
                 ____________________________________________________________
             """;
-
     public static final String BYE = """
                 ____________________________________________________________
                 Goodbye land dweller
@@ -26,8 +26,8 @@ public class Fish {
                 ____________________________________________________________
             """;
 
-    private static String[] list;
-    private static int listLength;
+    private static Task[] tasks;
+    private static int tasksLength;
 
     // Level-1
     public static String readInput() {
@@ -53,42 +53,84 @@ public class Fish {
 
     // Level-2
     public static void addToList(String item) {
-        list[listLength] = item;
-        listLength++;
+        tasks[tasksLength] = new Task(item);
+        tasksLength++;
         System.out.println(BAR + "    added: " + item + "\n" + BAR);
     }
 
+    public static void printItem(int i) {
+        System.out.println("    " + (i + 1) + ".[" + tasks[i].getStatusIcon() + "] " + tasks[i].getDescription());
+    }
+
     public static void printList() {
-        System.out.print(BAR);
-        for (int i = 0; i < listLength; i++) {
-            System.out.println("    " + (i + 1) + ". " + list[i]);
+        System.out.print(BAR + "Now get to work\n");
+        for (int i = 0; i < tasksLength; i++) {
+            printItem(i);
         }
         System.out.println(BAR);
     }
 
+    public static void markTask(int index) {
+        tasks[index].setAsDone();
+    }
+
+    public static void unmarkTask(int index) {
+        tasks[index].setAsNotDone();
+    }
+
+    public static String[] filterCommand(String sentence) {
+        String[] words = sentence.split(" ");
+        String[] result = new String[words.length];
+        int wordCount = 0;
+        for (String word : words) {
+            result[wordCount] = word;
+            wordCount++;
+        }
+        return Arrays.copyOf(result, wordCount);
+    }
+
+    public static void printMarkItemMessage(int i) {
+        System.out.println(BAR + "Not bad huh");
+        printItem(i);
+        System.out.println(BAR);
+    }
+
+    public static void printUnmarkItemMessage(int i) {
+        System.out.println(BAR + "Stop being a bum");
+        printItem(i);
+        System.out.println(BAR);
+    }
+
     public static void performListOps() {
-        list = new String[100];
-        listLength = 0;
+        tasks = new Task[100];
+        tasksLength = 0;
+
         boolean isActive = true;
 
         while (isActive) {
             String line = readInput().trim();
+            String[] args = filterCommand(line);
             if (line.equals("bye")) {
                 isActive = false;
                 break;
             } else if (line.equals("list")) {
                 printList();
-            }
-            else {
+            } else if (args[0].equals("mark")) {
+                int index = Integer.parseInt(args[1]) - 1;
+                markTask(index); // since index in list starts at 1
+                printMarkItemMessage(index);
+            } else if (args[0].equals("unmark")) {
+                int index = Integer.parseInt(args[1]) - 1;
+                unmarkTask(index);
+                printUnmarkItemMessage(index);
+            } else {
                 addToList(line);
             }
         }
     }
 
     public static void main(String[] args) {
-
         System.out.println(INTRO);
-
         performListOps();
         System.out.println(BYE);
     }
