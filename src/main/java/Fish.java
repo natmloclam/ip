@@ -81,8 +81,6 @@ public class Fish {
 
     /**
      * takes in a String, splits them at spaces and returns a String array
-     * @param sentence
-     * @return String[] array
      */
     public static String[] filterCommand(String sentence) {
         String[] words = sentence.split(" ");

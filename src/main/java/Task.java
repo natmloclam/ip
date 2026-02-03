@@ -2,7 +2,7 @@ public class Task {
     protected String description;
     protected boolean isDone;
 
-    public Task (String description) {
+    public Task(String description) {
         this.description = description;
         isDone = false;
     }
@@ -10,6 +10,7 @@ public class Task {
     public String getStatusIcon() {
         return (isDone ? "X" : " ");  // mark task done with X
     }
+
     public String getDescription() {
         return description;
     }
@@ -17,6 +18,7 @@ public class Task {
     public void setAsDone() {
         isDone = true;
     }
+
     public void setAsNotDone() {
         isDone = false;
     }
