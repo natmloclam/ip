@@ -55,11 +55,14 @@ public class Fish {
     public static void addToList(String item) {
         tasks[tasksLength] = new Task(item);
         tasksLength++;
-        System.out.println(BAR + "    added: " + item + "\n" + BAR);
+        printAddItemMessage(item);
     }
 
+
     public static void printItem(int i) {
-        System.out.println("    " + (i + 1) + ".[" + tasks[i].getStatusIcon() + "] " + tasks[i].getDescription());
+        System.out.print("     " + (i + 1) + ".");
+        System.out.print("[" + tasks[i].getType() + "]");
+        System.out.println("[" + tasks[i].getStatusIcon() + "] " + tasks[i].getDescription());
     }
 
     public static void printList() {
@@ -72,25 +75,24 @@ public class Fish {
 
     // Level-3
     public static void markTask(int index) {
-        tasks[index].setAsDone();
+        tasks[index].setIsDoneAs(true);
     }
 
     public static void unmarkTask(int index) {
-        tasks[index].setAsNotDone();
+        tasks[index].setIsDoneAs(false);
     }
 
     /**
-     * takes in a String, splits them at spaces and returns a String array
+     * Takes in a String, splits them into an array of size 2
+     * The first item is the command
+     * The second item is the argument
      */
     public static String[] filterCommand(String sentence) {
-        String[] words = sentence.split(" ");
-        String[] result = new String[words.length];
-        int wordCount = 0;
-        for (String word : words) {
-            result[wordCount] = word;
-            wordCount++;
-        }
-        return Arrays.copyOf(result, wordCount);
+        return sentence.split(" ", 2);
+    }
+
+    public static int getTaskIndex(String input) {
+        return Integer.parseInt(input) - 1;
     }
 
     public static void printMarkItemMessage(int i) {
@@ -105,6 +107,13 @@ public class Fish {
         System.out.println(BAR);
     }
 
+    private static void printAddItemMessage(String item) {
+        System.out.println(BAR + "Lookin busy today");
+        printItem(tasksLength-1);
+        System.out.println("    You have " + Task.getTaskCount() + " tasks. Get to work");
+        System.out.println(BAR);
+    }
+
     public static void performListOps() {
         tasks = new Task[100];
         tasksLength = 0;
@@ -112,21 +121,28 @@ public class Fish {
         boolean isActive = true;
 
         while (isActive) {
+            // takes input and parses it into an array args
             String line = readInput().trim();
-            String[] args = filterCommand(line);
+            String[] words = filterCommand(line);
+            String command = words[0];
+            String arg = "";
+            if (words.length >= 2) {
+                arg = words[1];
+            }
+
             if (line.equals("bye")) {
                 isActive = false;
                 break;
             } else if (line.equals("list")) {
                 printList();
-            } else if (args[0].equals("mark")) {
-                int index = Integer.parseInt(args[1]) - 1;
-                markTask(index); // since index in list starts at 1
-                printMarkItemMessage(index);
-            } else if (args[0].equals("unmark")) {
-                int index = Integer.parseInt(args[1]) - 1;
-                unmarkTask(index);
-                printUnmarkItemMessage(index);
+            } else if (command.equals("mark")) {
+                int taskIndex = getTaskIndex(arg);
+                markTask(taskIndex);
+                printMarkItemMessage(taskIndex);
+            } else if (command.equals("unmark")) {
+                int taskIndex = getTaskIndex(arg);
+                unmarkTask(taskIndex);
+                printUnmarkItemMessage(taskIndex);
             } else {
                 addToList(line);
             }
