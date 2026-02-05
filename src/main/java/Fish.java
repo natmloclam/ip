@@ -27,9 +27,7 @@ public class Fish {
             """;
 
     private static Task[] tasks;
-    private static int tasksLength;
 
-    // Level-1
     public static String readInput() {
         String line;
         Scanner in = new Scanner(System.in);
@@ -51,29 +49,36 @@ public class Fish {
         }
     }
 
-    // Level-2
-    public static void addToList(String item) {
-        tasks[tasksLength] = new Task(item);
-        tasksLength++;
+    public static void addToList(String command, String item) {
+        switch (command) {
+        case "todo":
+            createNewTodo(item);
+            break;
+        case "deadline":
+            createNewDeadline(item);
+            break;
+        case "event":
+            createNewEvent(item);
+            break;
+        default:
+            System.out.println("Invalid command");
+        }
         printAddItemMessage(item);
     }
 
-
     public static void printItem(int i) {
-        System.out.print("     " + (i + 1) + ".");
-        System.out.print("[" + tasks[i].getType() + "]");
-        System.out.println("[" + tasks[i].getStatusIcon() + "] " + tasks[i].getDescription());
+        System.out.print("     " + (i + 1) + "."); // prints item number
+        System.out.println(tasks[i].toString());
     }
 
     public static void printList() {
         System.out.print(BAR + "Now get to work\n");
-        for (int i = 0; i < tasksLength; i++) {
+        for (int i = 0; i < Task.getTaskCount(); i++) {
             printItem(i);
         }
         System.out.println(BAR);
     }
 
-    // Level-3
     public static void markTask(int index) {
         tasks[index].setIsDoneAs(true);
     }
@@ -89,6 +94,28 @@ public class Fish {
      */
     public static String[] filterCommand(String sentence) {
         return sentence.split(" ", 2);
+    }
+
+    public static void createNewDeadline(String input) {
+        int deadlineByPosition = input.indexOf("/by");
+        String description = input.substring(0, deadlineByPosition);
+        String deadline = input.substring(deadlineByPosition + 3).strip();
+
+        tasks[Task.getTaskCount()] = new  Deadline(description, deadline);
+    }
+
+    public static void createNewEvent(String input) {
+        int eventFromPosition = input.indexOf("/from");
+        int eventToPosition = input.indexOf("/to");
+        String description = input.substring(0, eventFromPosition).strip();
+        String from  = input.substring(eventFromPosition + 5, eventToPosition).strip();
+        String to  = input.substring(eventToPosition+3).strip();
+
+        tasks[Task.getTaskCount()] = new Event(description, from, to);
+    }
+
+    public static void createNewTodo(String input) {
+        tasks[Task.getTaskCount()] = new Todo(input);
     }
 
     public static int getTaskIndex(String input) {
@@ -109,19 +136,18 @@ public class Fish {
 
     private static void printAddItemMessage(String item) {
         System.out.println(BAR + "Lookin busy today");
-        printItem(tasksLength-1);
+        printItem(Task.getTaskCount()-1);
         System.out.println("    You have " + Task.getTaskCount() + " tasks. Get to work");
         System.out.println(BAR);
     }
 
     public static void performListOps() {
         tasks = new Task[100];
-        tasksLength = 0;
 
         boolean isActive = true;
 
         while (isActive) {
-            // takes input and parses it into an array args
+            // takes input and parses it into command and arg where possible
             String line = readInput().trim();
             String[] words = filterCommand(line);
             String command = words[0];
@@ -144,7 +170,7 @@ public class Fish {
                 unmarkTask(taskIndex);
                 printUnmarkItemMessage(taskIndex);
             } else {
-                addToList(line);
+                addToList(command, arg);
             }
         }
     }

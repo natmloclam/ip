@@ -10,7 +10,7 @@ public class Task {
     }
 
     public String getStatusIcon() {
-        return (isDone ? "X" : " ");  // mark task done with X
+        return (isDone ? "[X]" : "[ ]");  // mark task done with X
     }
 
     public String getDescription() {
@@ -21,15 +21,16 @@ public class Task {
         return taskCount;
     }
 
-    public static void setTaskCount(int taskCount) {
-        Task.taskCount = taskCount;
-    }
-
     public String getType() {
         return "0";
     }
 
     public void setIsDoneAs(boolean isDone) {
         this.isDone = isDone;
+    }
+
+    // returns status icon + description
+    public String toString() {
+        return getStatusIcon()+ " " + description;
     }
 }
