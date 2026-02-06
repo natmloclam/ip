@@ -1,50 +1,34 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Fish {
     public static final String BAR = "    ____________________________________________________________\n";
     public static final String INTRO =
             """
-                ____________________________________________________________
-                Hello! I'm the emperor 
-                                    .-')    ('-. .-.\s
-                                   ( OO ). ( OO )  /\s
-                   ,------.,-.-') (_)---\\_),--. ,--.\s
-                ('-| _.---'|  |OO)/    _ | |  | |  |\s
-                (OO|(_\\    |  |  \\\\  :` `. |   .|  |\s
-                /  |  '--. |  |(_/ '..`''.)|       |\s
-                \\_)|  .--',|  |_.'.-._)   \\|  .-.  |\s
-                  \\|  |_)(_|  |   \\       /|  | |  |\s
-                   `--'    `--'    `-----' `--' `--'\s
-            
-                Why are you repeating after me?
-                ____________________________________________________________
-            """;
+                        ____________________________________________________________
+                        Hello! I'm the emperor
+                                            .-')    ('-. .-.\s
+                                           ( OO ). ( OO )  /\s
+                           ,------.,-.-') (_)---\\_),--. ,--.\s
+                        ('-| _.---'|  |OO)/    _ | |  | |  |\s
+                        (OO|(_\\    |  |  \\\\  :` `. |   .|  |\s
+                        /  |  '--. |  |(_/ '..`''.)|       |\s
+                        \\_)|  .--',|  |_.'.-._)   \\|  .-.  |\s
+                          \\|  |_)(_|  |   \\       /|  | |  |\s
+                           `--'    `--'    `-----' `--' `--'\s
+                    
+                        Why are you repeating after me?
+                        ____________________________________________________________
+                    """;
     public static final String BYE =
             """
-                ____________________________________________________________
-                Goodbye land dweller
-                ***swims away***
-                ____________________________________________________________
-            """;
+                        ____________________________________________________________
+                        Goodbye land dweller
+                        ***swims away***
+                        ____________________________________________________________
+                    """;
 
     // attributes
     private static Task[] tasks;
-
-    public static void echo() {
-        boolean isActive = true;
-
-        Scanner in = new Scanner(System.in);
-
-        while (isActive) {
-            String line = in.nextLine().trim();
-            if (line.equals("bye")) {
-                isActive = false;
-                break;
-            }
-            System.out.println(BAR + "    " + line + "\n" + BAR);
-        }
-    }
 
     public static void addToList(String command, String item) {
         switch (command) {
@@ -60,7 +44,7 @@ public class Fish {
         default:
             System.out.println("Invalid command");
         }
-        printAddItemMessage(item);
+        printAddItemMessage();
     }
 
     public static void printItem(int i) {
@@ -84,30 +68,43 @@ public class Fish {
         tasks[index].setIsDoneAs(false);
     }
 
-    /**
-     * Takes in a String, splits them into an array of size 2
-     * The first item is the command
-     * The second item is the argument
-     */
-    public static String[] filterCommand(String sentence) {
-        return sentence.split(" ", 2);
+    public static String filterCommand(String sentence) {
+        String[] words = sentence.split(" ", 2);
+        return words[0];
+    }
+
+    public static String filterArg(String sentence) {
+        String[] splitSentence = sentence.split(" ");
+        if (splitSentence.length < 2) {
+            return "";
+        }
+        String[] words = sentence.split(" ", 2);
+        return words[1];
     }
 
     public static void createNewDeadline(String input) {
+        // get index of /by
         int deadlineByPosition = input.indexOf("/by");
+
+        // extract description and deadline from input
         String description = input.substring(0, deadlineByPosition).strip();
         String deadline = input.substring(deadlineByPosition + 3).strip();
 
-        tasks[Task.getTaskCount()] = new  Deadline(description, deadline);
+        // create new Deadline
+        tasks[Task.getTaskCount()] = new Deadline(description, deadline);
     }
 
     public static void createNewEvent(String input) {
+        // get indices of /from and /to
         int eventFromPosition = input.indexOf("/from");
         int eventToPosition = input.indexOf("/to");
-        String description = input.substring(0, eventFromPosition).strip();
-        String from  = input.substring(eventFromPosition + 5, eventToPosition).strip();
-        String to  = input.substring(eventToPosition+3).strip();
 
+        // extract description, from and to from input
+        String description = input.substring(0, eventFromPosition).strip();
+        String from = input.substring(eventFromPosition + 5, eventToPosition).strip();
+        String to = input.substring(eventToPosition + 3).strip();
+
+        // create new Event
         tasks[Task.getTaskCount()] = new Event(description, from, to);
     }
 
@@ -131,9 +128,9 @@ public class Fish {
         System.out.println(BAR);
     }
 
-    private static void printAddItemMessage(String item) {
+    private static void printAddItemMessage() {
         System.out.println(BAR + "Lookin busy today");
-        printItem(Task.getTaskCount()-1);
+        printItem(Task.getTaskCount() - 1);
         System.out.println("    You have " + Task.getTaskCount() + " tasks. Get to work");
         System.out.println(BAR);
     }
@@ -148,26 +145,25 @@ public class Fish {
         while (isActive) {
             // takes input and parses it into command and arg where possible
             String line = in.nextLine().strip();
-            String[] words = filterCommand(line);
-            String command = words[0];
-            String arg = "";
-            if (words.length >= 2) {
-                arg = words[1];
-            }
+            String command = filterCommand(line);
+            String arg = filterArg(line);
 
             if (line.equals("bye")) {
                 isActive = false;
-                break;
+
             } else if (line.equals("list")) {
                 printList();
+
             } else if (command.equals("mark")) {
                 int taskIndex = getTaskIndex(arg);
                 markTask(taskIndex);
                 printMarkItemMessage(taskIndex);
+
             } else if (command.equals("unmark")) {
                 int taskIndex = getTaskIndex(arg);
                 unmarkTask(taskIndex);
                 printUnmarkItemMessage(taskIndex);
+
             } else {
                 addToList(command, arg);
             }
