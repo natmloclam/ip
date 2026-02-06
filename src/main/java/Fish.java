@@ -3,7 +3,8 @@ import java.util.Scanner;
 
 public class Fish {
     public static final String BAR = "    ____________________________________________________________\n";
-    public static final String INTRO = """
+    public static final String INTRO =
+            """
                 ____________________________________________________________
                 Hello! I'm the emperor 
                                     .-')    ('-. .-.\s
@@ -19,28 +20,24 @@ public class Fish {
                 Why are you repeating after me?
                 ____________________________________________________________
             """;
-    public static final String BYE = """
+    public static final String BYE =
+            """
                 ____________________________________________________________
                 Goodbye land dweller
                 ***swims away***
                 ____________________________________________________________
             """;
 
+    // attributes
     private static Task[] tasks;
-
-    public static String readInput() {
-        String line;
-        Scanner in = new Scanner(System.in);
-        line = in.nextLine();
-
-        return line;
-    }
 
     public static void echo() {
         boolean isActive = true;
 
+        Scanner in = new Scanner(System.in);
+
         while (isActive) {
-            String line = readInput().trim();
+            String line = in.nextLine().trim();
             if (line.equals("bye")) {
                 isActive = false;
                 break;
@@ -98,7 +95,7 @@ public class Fish {
 
     public static void createNewDeadline(String input) {
         int deadlineByPosition = input.indexOf("/by");
-        String description = input.substring(0, deadlineByPosition);
+        String description = input.substring(0, deadlineByPosition).strip();
         String deadline = input.substring(deadlineByPosition + 3).strip();
 
         tasks[Task.getTaskCount()] = new  Deadline(description, deadline);
@@ -146,9 +143,11 @@ public class Fish {
 
         boolean isActive = true;
 
+        Scanner in = new Scanner(System.in);
+
         while (isActive) {
             // takes input and parses it into command and arg where possible
-            String line = readInput().trim();
+            String line = in.nextLine().strip();
             String[] words = filterCommand(line);
             String command = words[0];
             String arg = "";
