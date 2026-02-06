@@ -43,6 +43,7 @@ public class Fish {
             break;
         default:
             System.out.println("Invalid command");
+            return;
         }
         printAddItemMessage();
     }
