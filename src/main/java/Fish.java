@@ -1,31 +1,6 @@
 import java.util.Scanner;
 
 public class Fish {
-    public static final String BAR = "    ____________________________________________________________\n";
-    public static final String INTRO =
-            """
-                        ____________________________________________________________
-                        Hello! I'm the emperor
-                                            .-')    ('-. .-.\s
-                                           ( OO ). ( OO )  /\s
-                           ,------.,-.-') (_)---\\_),--. ,--.\s
-                        ('-| _.---'|  |OO)/    _ | |  | |  |\s
-                        (OO|(_\\    |  |  \\\\  :` `. |   .|  |\s
-                        /  |  '--. |  |(_/ '..`''.)|       |\s
-                        \\_)|  .--',|  |_.'.-._)   \\|  .-.  |\s
-                          \\|  |_)(_|  |   \\       /|  | |  |\s
-                           `--'    `--'    `-----' `--' `--'\s
-                    
-                        Why are you repeating after me?
-                        ____________________________________________________________
-                    """;
-    public static final String BYE =
-            """
-                        ____________________________________________________________
-                        Goodbye land dweller
-                        ***swims away***
-                        ____________________________________________________________
-                    """;
 
     // attributes
     private static Task[] tasks;
@@ -54,11 +29,11 @@ public class Fish {
     }
 
     public static void printList() {
-        System.out.print(BAR + "Now get to work\n");
+        System.out.print(FishMessages.BAR + "Now get to work\n");
         for (int i = 0; i < Task.getTaskCount(); i++) {
             printItem(i);
         }
-        System.out.println(BAR);
+        System.out.println(FishMessages.BAR);
     }
 
     public static void markTask(int index) {
@@ -118,22 +93,22 @@ public class Fish {
     }
 
     public static void printMarkItemMessage(int i) {
-        System.out.println(BAR + "Not bad huh");
+        System.out.println(FishMessages.BAR + "Not bad huh");
         printItem(i);
-        System.out.println(BAR);
+        System.out.println(FishMessages.BAR);
     }
 
     public static void printUnmarkItemMessage(int i) {
-        System.out.println(BAR + "Stop being a bum");
+        System.out.println(FishMessages.BAR + "Stop being a bum");
         printItem(i);
-        System.out.println(BAR);
+        System.out.println(FishMessages.BAR);
     }
 
     private static void printAddItemMessage() {
-        System.out.println(BAR + "Lookin busy today");
+        System.out.println(FishMessages.BAR + "Lookin busy today");
         printItem(Task.getTaskCount() - 1);
         System.out.println("    You have " + Task.getTaskCount() + " tasks. Get to work");
-        System.out.println(BAR);
+        System.out.println(FishMessages.BAR);
     }
 
     public static void performListOps() {
@@ -172,8 +147,8 @@ public class Fish {
     }
 
     public static void main(String[] args) {
-        System.out.println(INTRO);
+        System.out.println(FishMessages.INTRO);
         performListOps();
-        System.out.println(BYE);
+        System.out.println(FishMessages.BYE);
     }
 }
