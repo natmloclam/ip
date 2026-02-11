@@ -1,4 +1,11 @@
+package Fish;
+
 import java.util.Scanner;
+
+import Fish.Tasks.Deadline;
+import Fish.Tasks.Event;
+import Fish.Tasks.Task;
+import Fish.Tasks.Todo;
 
 public class Fish {
     private static Task[] tasks;

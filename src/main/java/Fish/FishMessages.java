@@ -1,3 +1,5 @@
+package Fish;
+
 public class FishMessages {
     public static final String BAR = "    ____________________________________________________________\n";
     public static final String INTRO =
@@ -13,7 +15,7 @@ public class FishMessages {
                           \\|  |_)(_|  |   \\       /|  | |  |\s
                            `--'    `--'    `-----' `--' `--'\s
                     
-                        Why are you repeating after me?
+                        What do you want?
                     """;
 
     public static final String BYE =
