@@ -1,9 +1,7 @@
 public class FishMessages {
-
     public static final String BAR = "    ____________________________________________________________\n";
     public static final String INTRO =
-            """
-                        ____________________________________________________________
+                    """
                         Hello! I'm the emperor
                                             .-')    ('-. .-.\s
                                            ( OO ). ( OO )  /\s
@@ -16,13 +14,23 @@ public class FishMessages {
                            `--'    `--'    `-----' `--' `--'\s
                     
                         Why are you repeating after me?
-                        ____________________________________________________________
                     """;
+
     public static final String BYE =
-            """
-                        ____________________________________________________________
+                    """
                         Goodbye land dweller
                         ***swims away***
-                        ____________________________________________________________
                     """;
+
+    public static final String INVALID_DEADLINE =
+            "    Enter a deadline bozo\n " +
+            "    Message format: deadline <description> /by <deadline>";
+
+    public static final String INVALID_EVENT =
+            "    Enter a start and end time bozo\n" +
+            "    Message format: event <description> /from <start time> /to <end time>";
+
+    public static final String INVALID_TODO =
+            "    I know you like doing nothing but come on\n" +
+            "    Message format: todo <description>";
 }
