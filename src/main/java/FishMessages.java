@@ -22,6 +22,16 @@ public class FishMessages {
                         ***swims away***
                     """;
 
+    public static final String INVALID_COMMAND =
+            """
+                        Valid Commands:
+                        todo, deadline, event - Add a new task
+                        bye - I'll swim away
+                        list - I'm gonna release the list
+                        mark - Mark a task as done
+                        unmark - Unmark a task\
+                    """;
+
     public static final String INVALID_DEADLINE =
             "    Enter a deadline bozo\n " +
             "    Message format: deadline <description> /by <deadline>";
@@ -33,4 +43,19 @@ public class FishMessages {
     public static final String INVALID_TODO =
             "    I know you like doing nothing but come on\n" +
             "    Message format: todo <description>";
+
+    public static final String INVALID_MARK_INDEX = """
+                        Use a valid task index!
+                        Message format: mark <task index>
+                        Use list to find task index\
+                    """;
+
+    public static final String INVALID_UNMARK_INDEX = """
+                        Use a valid task index!
+                        Message format: unmark <task index>
+                        Use list to find task index\
+                    """;
+
+    public static final String INVALID_MARK_ARG_TYPE =
+            "    Task index should be a number";
 }

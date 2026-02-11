@@ -5,35 +5,16 @@ public class Fish {
     // attributes
     private static Task[] tasks;
 
-    public static void addToList(String command, String item) {
-        try {
-            switch (command) {
-            case "todo":
-                createNewTodo(item);
-                break;
-            case "deadline":
-                createNewDeadline(item);
-                break;
-            case "event":
-                createNewEvent(item);
-                break;
-            default:
-                System.out.println("Invalid command");
-                return;
-            }
-            printAddItemMessage();
-        } catch (FishException e) {
-            printErrorMessage(e);
-        }
-    }
 
+    // ========= PRINT FUNCTIONS ========= //
     private static void printErrorMessage(Exception e) {
         printBar();
         System.out.println(e.getMessage());
         printBar();
+        printNewline();
     }
 
-       public static void printItem(int i) {
+    public static void printItem(int i) {
         System.out.print("     " + (i + 1) + "."); // prints item number
         System.out.println(tasks[i].toString());
     }
@@ -68,13 +49,70 @@ public class Fish {
     private static void printNewline() {
         System.out.println();
     }
-
-    public static void markTask(int index) {
-        tasks[index].setIsDoneAs(true);
+    public static void printMarkItemMessage(int i) {
+        printBar();
+        System.out.println("Not bad huh");
+        printItem(i);
+        printBar();
+        printNewline();
     }
 
-    public static void unmarkTask(int index) {
+    public static void printUnmarkItemMessage(int i) {
+        printBar();
+        System.out.println("Stop being a bum");
+        printItem(i);
+        printBar();
+        printNewline();
+    }
+
+    private static void printAddItemMessage() {
+        printBar();
+        System.out.println("Lookin busy today");
+        printItem(Task.getTaskCount() - 1);
+        System.out.println("    You have " + Task.getTaskCount() + " tasks. Get to work");
+        printBar();
+        printNewline();
+    }
+
+    // ========= OPERATION METHODS ========= //
+    public static int markTask(String arg) throws FishException {
+        // convert String arg into Integer index
+        int index = 0;
+        try {
+            index = getTaskIndex(arg);
+        } catch (NumberFormatException e) {
+            System.out.println(FishMessages.INVALID_MARK_ARG_TYPE);
+            throw new FishException(FishMessages.INVALID_MARK_INDEX);
+        }
+
+        // throw exception if index is invalid
+        if (index < 0 || index >= Task.getTaskCount()) {
+            System.out.println("Item number " + (index + 1) + " is out of bounds!");
+            throw new FishException(FishMessages.INVALID_MARK_INDEX);
+        }
+        tasks[index].setIsDoneAs(true);
+
+        return index;
+    }
+
+    public static int unmarkTask(String arg) throws FishException {
+        // convert String arg into Integer index
+        int index = 0;
+        try {
+            index = getTaskIndex(arg);
+        } catch (NumberFormatException e) {
+            System.out.println(FishMessages.INVALID_MARK_ARG_TYPE);
+            throw new FishException(FishMessages.INVALID_MARK_INDEX);
+        }
+
+        // throw exception if index is invalid
+        if (index < 0 || index >= Task.getTaskCount()) {
+            System.out.println("Item number " + (index + 1) + " is out of bounds!");
+            throw new FishException(FishMessages.INVALID_UNMARK_INDEX);
+        }
         tasks[index].setIsDoneAs(false);
+
+        return index;
     }
 
     public static String filterCommand(String sentence) {
@@ -91,6 +129,7 @@ public class Fish {
         return words[1];
     }
 
+    // ========= CREATE TASKS METHODS ========= //
     public static void createNewDeadline(String input) throws FishException {
         // get index of /by
         int deadlineByPosition = input.indexOf("/by");
@@ -148,28 +187,23 @@ public class Fish {
         return Integer.parseInt(input) - 1;
     }
 
-    public static void printMarkItemMessage(int i) {
-        printBar();
-        System.out.println("Not bad huh");
-        printItem(i);
-        printBar();
-        printNewline();
-    }
-
-    public static void printUnmarkItemMessage(int i) {
-        printBar();
-        System.out.println("Stop being a bum");
-        printItem(i);
-        printBar();
-        printNewline();
-    }
-
-    private static void printAddItemMessage() {
-        printBar();
-        System.out.println("Lookin busy today");
-        printItem(Task.getTaskCount() - 1);
-        System.out.println("    You have " + Task.getTaskCount() + " tasks. Get to work");
-        printBar();
+    // ========= HIGHER LEVEL FUNCTIONS ========= //
+    public static void addToList(String command, String item) throws FishException {
+        switch (command) {
+        case "todo":
+            createNewTodo(item);
+            break;
+        case "deadline":
+            createNewDeadline(item);
+            break;
+        case "event":
+            createNewEvent(item);
+            break;
+        default:
+            System.out.println(command + " is not a valid command!");
+            throw new FishException(FishMessages.INVALID_COMMAND);
+        }
+        printAddItemMessage();
     }
 
     public static void performListOps() {
@@ -185,26 +219,38 @@ public class Fish {
             String command = filterCommand(line);
             String arg = filterArg(line);
 
-            if (line.equals("bye")) {
-                isActive = false;
-
-            } else if (line.equals("list")) {
-                printList();
-
-            } else if (command.equals("mark")) {
-                int taskIndex = getTaskIndex(arg);
-                markTask(taskIndex);
-                printMarkItemMessage(taskIndex);
-
-            } else if (command.equals("unmark")) {
-                int taskIndex = getTaskIndex(arg);
-                unmarkTask(taskIndex);
-                printUnmarkItemMessage(taskIndex);
-
-            } else {
-                addToList(command, arg);
+            try {
+                isActive = handleCommand(command, arg);
+            } catch (FishException e) {
+                printErrorMessage(e);
             }
         }
+    }
+
+    private static boolean handleCommand(String command, String arg) throws FishException {
+        switch (command) {
+        case("bye"):
+            return false;
+
+        case("list"):
+            printList();
+            break;
+
+        case("mark"):
+            int markTaskIndex = markTask(arg);
+            printMarkItemMessage(markTaskIndex);
+            break;
+
+        case("unmark"):
+            int unmarkTaskIndex = unmarkTask(arg);
+            printUnmarkItemMessage(unmarkTaskIndex);
+            break;
+
+        default:
+            addToList(command, arg);
+            break;
+        }
+        return true;
     }
 
     public static void main(String[] args) {
