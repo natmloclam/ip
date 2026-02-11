@@ -1,10 +1,7 @@
 import java.util.Scanner;
 
 public class Fish {
-
-    // attributes
     private static Task[] tasks;
-
 
     // ========= PRINT FUNCTIONS ========= //
     private static void printErrorMessage(Exception e) {
@@ -49,6 +46,7 @@ public class Fish {
     private static void printNewline() {
         System.out.println();
     }
+
     public static void printMarkItemMessage(int i) {
         printBar();
         System.out.println("Not bad huh");
@@ -77,7 +75,7 @@ public class Fish {
     // ========= OPERATION METHODS ========= //
     public static int markTask(String arg) throws FishException {
         // convert String arg into Integer index
-        int index = 0;
+        int index;
         try {
             index = getTaskIndex(arg);
         } catch (NumberFormatException e) {
@@ -90,14 +88,15 @@ public class Fish {
             System.out.println("Item number " + (index + 1) + " is out of bounds!");
             throw new FishException(FishMessages.INVALID_MARK_INDEX);
         }
-        tasks[index].setIsDoneAs(true);
 
+        // mark test and return index
+        tasks[index].setIsDoneAs(true);
         return index;
     }
 
     public static int unmarkTask(String arg) throws FishException {
         // convert String arg into Integer index
-        int index = 0;
+        int index;
         try {
             index = getTaskIndex(arg);
         } catch (NumberFormatException e) {
@@ -110,8 +109,9 @@ public class Fish {
             System.out.println("Item number " + (index + 1) + " is out of bounds!");
             throw new FishException(FishMessages.INVALID_UNMARK_INDEX);
         }
-        tasks[index].setIsDoneAs(false);
 
+        // unmark task and return index
+        tasks[index].setIsDoneAs(false);
         return index;
     }
 
