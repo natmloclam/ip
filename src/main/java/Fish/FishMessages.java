@@ -59,5 +59,14 @@ public class FishMessages {
                     """;
 
     public static final String INVALID_MARK_ARG_TYPE =
-            "    Task index should be a number";
+            "Task index should be a number";
+
+    public static final String INVALID_DELETE_INDEX = """
+                Use a vaid task index!
+                Message format: delete <task index> 
+                Use list to find task index\
+            """;
+
+    public static final String INVALID_DELETE_ARG_TYPE =
+            "Task index should be a number";
 }
