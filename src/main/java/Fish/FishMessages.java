@@ -31,7 +31,8 @@ public class FishMessages {
                         bye - I'll swim away
                         list - I'm gonna release the list
                         mark - Mark a task as done
-                        unmark - Unmark a task\
+                        unmark - Unmark a task
+                        delete - Delete a task\
                     """;
 
     public static final String INVALID_DEADLINE =
@@ -62,8 +63,8 @@ public class FishMessages {
             "Task index should be a number";
 
     public static final String INVALID_DELETE_INDEX = """
-                Use a vaid task index!
-                Message format: delete <task index> 
+                Use a valid task index!
+                Message format: delete <task index>
                 Use list to find task index\
             """;
 

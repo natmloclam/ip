@@ -10,13 +10,13 @@
       \|  |_)(_|  |   \       /|  | |  | 
        `--'    `--'    `-----' `--' `--' 
 
-    Why are you repeating after me?
+    What do you want?
     ____________________________________________________________
 
     ____________________________________________________________
 Lookin busy today
      1.[T][ ] return book
-    You have 1 tasks. Get to work
+    You have 1 task. Get to work
     ____________________________________________________________
 
     ____________________________________________________________
@@ -56,6 +56,19 @@ Now get to work
      1.[T][ ] return book
      2.[D][X] return book (by: June 6th)
      3.[E][ ] project meeting (from: Aug 6th 2pm, to: 4pm)
+    ____________________________________________________________
+
+    ____________________________________________________________
+Deleting your history hee hee
+     3.[E][ ] project meeting (from: Aug 6th 2pm, to: 4pm)
+    You have 2 tasks. Get to work
+    ____________________________________________________________
+
+Task index should be a number
+    ____________________________________________________________
+    Use a valid task index!
+    Message format: delete <task index>
+    Use list to find task index
     ____________________________________________________________
 
     ____________________________________________________________

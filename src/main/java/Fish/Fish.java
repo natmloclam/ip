@@ -91,7 +91,7 @@ public class Fish {
 
     private static void printTaskCount() {
         System.out.print("    You have " + (Task.getTaskCount()));
-        if (Task.getTaskCount() - 1 == 1) {
+        if (Task.getTaskCount() == 1) {
             System.out.println(" task. Get to work");
         } else {
             System.out.println(" tasks. Get to work");
