@@ -1,5 +1,6 @@
 package Fish;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import Fish.Tasks.Deadline;
@@ -8,7 +9,8 @@ import Fish.Tasks.Task;
 import Fish.Tasks.Todo;
 
 public class Fish {
-    private static Task[] tasks;
+//    private static Task[] tasks;
+    private static ArrayList<Task> tasks = new ArrayList<>();
 
     // ========= PRINT FUNCTIONS ========= //
     private static void printErrorMessage(Exception e) {
@@ -20,7 +22,7 @@ public class Fish {
 
     public static void printItem(int i) {
         System.out.print("     " + (i + 1) + "."); // prints item number
-        System.out.println(tasks[i].toString());
+        System.out.println(tasks.get(i).toString());
     }
 
     public static void printList() {
@@ -97,7 +99,7 @@ public class Fish {
         }
 
         // mark test and return index
-        tasks[index].setIsDoneAs(true);
+        tasks.get(index).setIsDoneAs(true);
         return index;
     }
 
@@ -118,7 +120,7 @@ public class Fish {
         }
 
         // unmark task and return index
-        tasks[index].setIsDoneAs(false);
+        tasks.get(index).setIsDoneAs(false);
         return index;
     }
 
@@ -156,7 +158,7 @@ public class Fish {
         }
 
         // create new Deadline
-        tasks[Task.getTaskCount()] = new Deadline(description, deadline);
+        tasks.add(new Deadline(description, deadline));
     }
 
     public static void createNewEvent(String input) throws FishException {
@@ -180,14 +182,14 @@ public class Fish {
         }
 
         // create new Event
-        tasks[Task.getTaskCount()] = new Event(description, from, to);
+        tasks.add(new Event(description, from, to));
     }
 
     public static void createNewTodo(String input) throws FishException {
         if (input.isEmpty()) {
             throw new FishException(FishMessages.INVALID_TODO);
         }
-        tasks[Task.getTaskCount()] = new Todo(input);
+        tasks.add(new Todo(input));
     }
 
     public static int getTaskIndex(String input) {
@@ -214,7 +216,7 @@ public class Fish {
     }
 
     public static void performListOps() {
-        tasks = new Task[100];
+//        tasks = new Task[100];
 
         boolean isActive = true;
 
