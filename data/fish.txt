@@ -1,4 +1,2 @@
-T | 1 | return book
-E | 1 | book fair | 6pm | 8pm
-T | 0 | get book
-E | 1 | bookfair | 6pm | tmr
+T | 1 | borrow book from James
+E | 0 | sleep | 9pm | 9am
