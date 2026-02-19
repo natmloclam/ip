@@ -11,94 +11,11 @@ import Fish.Tasks.Todo;
 public class Fish {
     private static ArrayList<Task> tasks = new ArrayList<>();
 
-    // ========= PRINT FUNCTIONS ========= //
-    public static void printErrorMessage(Exception e) {
-        printBar();
-        System.out.println(e.getMessage());
-        printBar();
-        printNewline();
-    }
-
-    public static void printItem(int i) {
-        System.out.print("     " + (i + 1) + "."); // prints item number
-        System.out.println(tasks.get(i).toString());
-    }
-
-    public static void printList() {
-        printBar();
-        System.out.println("Now get to work");
-        for (int i = 0; i < Task.getTaskCount(); i++) {
-            printItem(i);
-        }
-        printBar();
-        printNewline();
-    }
-
-    private static void printIntro() {
-        printBar();
-        System.out.print(FishMessages.INTRO);
-        printBar();
-        printNewline();
-    }
-
-    private static void printBye() {
-        printBar();
-        System.out.print(FishMessages.BYE);
-        printBar();
-    }
-
-    private static void printBar() {
-        System.out.print(FishMessages.BAR);
-    }
-
-    private static void printNewline() {
-        System.out.println();
-    }
-
-    public static void printMarkItemMessage(int i) {
-        printBar();
-        System.out.println("Not bad huh");
-        printItem(i);
-        printBar();
-        printNewline();
-    }
-
-    public static void printUnmarkItemMessage(int i) {
-        printBar();
-        System.out.println("Stop being a bum");
-        printItem(i);
-        printBar();
-        printNewline();
-    }
-
-    private static void printAddItemMessage() {
-        printBar();
-        System.out.println("Lookin busy today");
-        printItem(Task.getTaskCount() - 1);
-        printTaskCount();
-        printBar();
-        printNewline();
-    }
-
-    private static void printDeleteItemMessage(int index) {
-        printBar();
-        System.out.println("Deleting your history hee hee");
-        printItem(index);
-        printTaskCount();
-        printBar();
-        printNewline();
-    }
-
-    private static void printTaskCount() {
-        System.out.print("    You have " + (Task.getTaskCount()));
-        if (Task.getTaskCount() == 1) {
-            System.out.println(" task. Get to work");
-        } else {
-            System.out.println(" tasks. Get to work");
-        }
-    }
-
     // ========= OPERATION METHODS ========= //
+    public static Task getTask(int i) {
+        return tasks.get(i);
+    }
+
     public static int markTask(String arg) throws FishException {
         // convert String arg into Integer index
         int index;
@@ -182,7 +99,7 @@ public class Fish {
         Task.reduceTaskCountByOne();
 
         // print delete message with the new task count
-        printDeleteItemMessage(indexToDelete);
+        Printer.printDeleteItemMessage(indexToDelete);
 
         // remove the task from tasks
         tasks.remove(indexToDelete);
@@ -262,7 +179,7 @@ public class Fish {
             System.out.println(command + " is not a valid command!");
             throw new FishException(FishMessages.INVALID_COMMAND);
         }
-        printAddItemMessage();
+        Printer.printAddItemMessage();
     }
 
     public static void performListOps() {
@@ -282,7 +199,7 @@ public class Fish {
             try {
                 isActive = handleCommand(command, arg);
             } catch (FishException e) {
-                printErrorMessage(e);
+                Printer.printErrorMessage(e);
             }
         }
     }
@@ -293,18 +210,18 @@ public class Fish {
             return false;
 
         case("list"):
-            printList();
+            Printer.printList();
             break;
 
         case("mark"):
             int markTaskIndex = markTask(arg);
-            printMarkItemMessage(markTaskIndex);
+            Printer.printMarkItemMessage(markTaskIndex);
             Data.save(tasks);
             break;
 
         case("unmark"):
             int unmarkTaskIndex = unmarkTask(arg);
-            printUnmarkItemMessage(unmarkTaskIndex);
+            Printer.printUnmarkItemMessage(unmarkTaskIndex);
             Data.save(tasks);
             break;
 
@@ -322,8 +239,8 @@ public class Fish {
     }
 
     public static void main(String[] args) {
-        printIntro();
+        Printer.printIntro();
         performListOps();
-        printBye();
+        Printer.printBye();
     }
 }
