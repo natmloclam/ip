@@ -12,7 +12,7 @@ public class Fish {
     private static ArrayList<Task> tasks = new  ArrayList<>();
 
     // ========= PRINT FUNCTIONS ========= //
-    private static void printErrorMessage(Exception e) {
+    public static void printErrorMessage(Exception e) {
         printBar();
         System.out.println(e.getMessage());
         printBar();
@@ -217,6 +217,9 @@ public class Fish {
     public static void performListOps() {
         boolean isActive = true;
 
+        // try to load from data/fish.txt - if unable to, starts from empty list
+        tasks = Data.load();
+
         Scanner in = new Scanner(System.in);
 
         while (isActive) {
@@ -225,9 +228,7 @@ public class Fish {
             String command = filterCommand(line);
             String arg = filterArg(line);
 
-
             try {
-                tasks = Data.load();
                 isActive = handleCommand(command, arg);
             } catch (FishException e) {
                 printErrorMessage(e);
@@ -247,15 +248,18 @@ public class Fish {
         case("mark"):
             int markTaskIndex = markTask(arg);
             printMarkItemMessage(markTaskIndex);
+            Data.save(tasks);
             break;
 
         case("unmark"):
             int unmarkTaskIndex = unmarkTask(arg);
             printUnmarkItemMessage(unmarkTaskIndex);
+            Data.save(tasks);
             break;
 
         default:
             addToList(command, arg);
+            Data.save(tasks);
             break;
         }
         return true;

@@ -15,7 +15,7 @@ public class Data {
     private static final String FILE_PATH = "data/fish.txt";
 
     public static void addToTasks(ArrayList<Task> tasks, String line) {
-        String[] words = line.split(" | ");
+        String[] words = line.split(" \\| ");
         if (words.length < 3) {
             return;
         }
@@ -58,14 +58,37 @@ public class Data {
         }
     }
 
-    public static ArrayList<Task> load() throws FishException {
+    public static ArrayList<Task> load() {
         ArrayList<Task> tasks = new ArrayList<>();
 
         try {
             readFileContents(tasks);
         } catch (IOException e) {
-            throw new FishException(FishMessages.FILE_READ_ERROR);
+            System.out.println(FishMessages.FILE_READ_ERROR);
         }
         return tasks;
+    }
+
+    public static void save(ArrayList<Task> tasks) throws FishException {
+        try {
+            File file = new File(FILE_PATH);
+            File parentDir = file.getParentFile();
+
+            if (parentDir != null && !parentDir.exists()) {
+                boolean dirCreated =  parentDir.mkdirs();
+                if (!dirCreated) {
+                    throw new FishException(FishMessages.MKDIR_ERROR +  parentDir.getAbsolutePath());
+                }
+            }
+
+            FileWriter writer = new FileWriter(FILE_PATH);
+            for (Task task : tasks) {
+                writer.write(task.toFileFormat() + System.lineSeparator());
+            }
+            writer.close();
+
+        } catch (IOException e) {
+            throw new FishException(FishMessages.FILE_WRITE_ERROR);
+        }
     }
 }
