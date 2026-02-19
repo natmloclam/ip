@@ -20,7 +20,7 @@ public class Printer {
 
     public static void printItem(int i) {
         System.out.print("     " + (i + 1) + "."); // prints item number
-        Task task = Fish.getTask(i);
+        Task task = TaskList.getTask(i);
         System.out.println(task.toString());
     }
 
