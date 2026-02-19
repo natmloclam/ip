@@ -60,4 +60,6 @@ public class FishMessages {
 
     public static final String INVALID_MARK_ARG_TYPE =
             "    Task index should be a number";
+
+    public static final String FILE_READ_ERROR = "Error reading file";
 }
