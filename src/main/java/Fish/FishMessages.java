@@ -70,4 +70,10 @@ public class FishMessages {
 
     public static final String INVALID_DELETE_ARG_TYPE =
             "Task index should be a number";
+
+    public static final String FILE_READ_ERROR = "Error reading file - starting from empty list";
+
+    public static final String FILE_WRITE_ERROR = "Error writing file";
+
+    public static final String MKDIR_ERROR = "Unable to make directory: ";
 }

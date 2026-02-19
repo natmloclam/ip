@@ -12,7 +12,7 @@ public class Fish {
     private static ArrayList<Task> tasks = new ArrayList<>();
 
     // ========= PRINT FUNCTIONS ========= //
-    private static void printErrorMessage(Exception e) {
+    public static void printErrorMessage(Exception e) {
         printBar();
         System.out.println(e.getMessage());
         printBar();
@@ -265,38 +265,11 @@ public class Fish {
         printAddItemMessage();
     }
 
-    private static boolean handleCommand(String command, String arg) throws FishException {
-        switch (command) {
-        case("bye"):
-            return false;
-
-        case("list"):
-            printList();
-            break;
-
-        case("mark"):
-            int markTaskIndex = markTask(arg);
-            printMarkItemMessage(markTaskIndex);
-            break;
-
-        case("unmark"):
-            int unmarkTaskIndex = unmarkTask(arg);
-            printUnmarkItemMessage(unmarkTaskIndex);
-            break;
-
-        case ("delete"):
-            removeFromList(arg);
-            break;
-
-        default:
-            addToList(command, arg);
-            break;
-        }
-        return true;
-    }
-
     public static void performListOps() {
         boolean isActive = true;
+
+        // try to load from data/fish.txt - if unable to, starts from empty list
+        tasks = Data.load();
 
         Scanner in = new Scanner(System.in);
 
@@ -312,6 +285,40 @@ public class Fish {
                 printErrorMessage(e);
             }
         }
+    }
+
+    private static boolean handleCommand(String command, String arg) throws FishException {
+        switch (command) {
+        case("bye"):
+            return false;
+
+        case("list"):
+            printList();
+            break;
+
+        case("mark"):
+            int markTaskIndex = markTask(arg);
+            printMarkItemMessage(markTaskIndex);
+            Data.save(tasks);
+            break;
+
+        case("unmark"):
+            int unmarkTaskIndex = unmarkTask(arg);
+            printUnmarkItemMessage(unmarkTaskIndex);
+            Data.save(tasks);
+            break;
+
+        case ("delete"):
+            removeFromList(arg);
+            Data.save(tasks);
+            break;
+
+        default:
+            addToList(command, arg);
+            Data.save(tasks);
+            break;
+        }
+        return true;
     }
 
     public static void main(String[] args) {
