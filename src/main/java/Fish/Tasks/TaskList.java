@@ -1,18 +1,17 @@
-package Fish;
+package Fish.Tasks;
 
 import java.util.ArrayList;
 
-import Fish.Tasks.Deadline;
-import Fish.Tasks.Event;
-import Fish.Tasks.Task;
-import Fish.Tasks.Todo;
+import Fish.Helpers.FishException;
+import Fish.Helpers.FishMessages;
+import Fish.Helpers.Printer;
 
 public class TaskList {
-    public static final String COMMAND_TODO = "todo";
-    public static final String COMMAND_EVENT = "event";
-    public static final String COMMAND_DEADLINE = "deadline";
+    public static final String TASK_TYPE_TODO = "todo";
+    public static final String TASK_TYPE_EVENT = "event";
+    public static final String TASK_TYPE_DEADLINE = "deadline";
 
-    static ArrayList<Task> tasks = new ArrayList<>();
+    public static ArrayList<Task> tasks = new ArrayList<>();
 
     // ========= OPERATION METHODS ========= //
     public static Task getTask(int i) {
@@ -155,13 +154,13 @@ public class TaskList {
     // ========= HIGHER LEVEL FUNCTIONS ========= //
     public static void addToList(String command, String item) throws FishException {
         switch (command) {
-        case COMMAND_TODO:
+        case TASK_TYPE_TODO:
             createNewTodo(item);
             break;
-        case COMMAND_DEADLINE:
+        case TASK_TYPE_DEADLINE:
             createNewDeadline(item);
             break;
-        case COMMAND_EVENT:
+        case TASK_TYPE_EVENT:
             createNewEvent(item);
             break;
         default:

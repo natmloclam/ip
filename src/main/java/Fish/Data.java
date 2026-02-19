@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import Fish.Helpers.FishException;
+import Fish.Helpers.FishMessages;
 import Fish.Tasks.Deadline;
 import Fish.Tasks.Event;
 import Fish.Tasks.Task;

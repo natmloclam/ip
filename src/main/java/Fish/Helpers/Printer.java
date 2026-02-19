@@ -1,5 +1,6 @@
-package Fish;
+package Fish.Helpers;
 
+import Fish.Tasks.TaskList;
 import Fish.Tasks.Task;
 
 public class Printer {

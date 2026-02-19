@@ -1,4 +1,4 @@
-package Fish;
+package Fish.Helpers;
 
 public class FishException extends Exception {
     public FishException(String message) {

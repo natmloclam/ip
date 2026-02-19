@@ -1,4 +1,4 @@
-package Fish;
+package Fish.Helpers;
 
 public class FishMessages {
     public static final String BAR = "    ____________________________________________________________\n";
