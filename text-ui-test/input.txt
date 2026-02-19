@@ -6,4 +6,6 @@ event /from 6am
 deadline sleep /by
 mark 2
 list
+delete 3
+delete f
 bye

@@ -1,5 +1,6 @@
 package Fish;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import Fish.Tasks.Deadline;
@@ -8,7 +9,7 @@ import Fish.Tasks.Task;
 import Fish.Tasks.Todo;
 
 public class Fish {
-    private static Task[] tasks;
+    private static ArrayList<Task> tasks = new ArrayList<>();
 
     // ========= PRINT FUNCTIONS ========= //
     private static void printErrorMessage(Exception e) {
@@ -20,7 +21,7 @@ public class Fish {
 
     public static void printItem(int i) {
         System.out.print("     " + (i + 1) + "."); // prints item number
-        System.out.println(tasks[i].toString());
+        System.out.println(tasks.get(i).toString());
     }
 
     public static void printList() {
@@ -74,9 +75,27 @@ public class Fish {
         printBar();
         System.out.println("Lookin busy today");
         printItem(Task.getTaskCount() - 1);
-        System.out.println("    You have " + Task.getTaskCount() + " tasks. Get to work");
+        printTaskCount();
         printBar();
         printNewline();
+    }
+
+    private static void printDeleteItemMessage(int index) {
+        printBar();
+        System.out.println("Deleting your history hee hee");
+        printItem(index);
+        printTaskCount();
+        printBar();
+        printNewline();
+    }
+
+    private static void printTaskCount() {
+        System.out.print("    You have " + (Task.getTaskCount()));
+        if (Task.getTaskCount() == 1) {
+            System.out.println(" task. Get to work");
+        } else {
+            System.out.println(" tasks. Get to work");
+        }
     }
 
     // ========= OPERATION METHODS ========= //
@@ -97,7 +116,7 @@ public class Fish {
         }
 
         // mark test and return index
-        tasks[index].setIsDoneAs(true);
+        tasks.get(index).setIsDoneAs(true);
         return index;
     }
 
@@ -108,7 +127,7 @@ public class Fish {
             index = getTaskIndex(arg);
         } catch (NumberFormatException e) {
             System.out.println(FishMessages.INVALID_MARK_ARG_TYPE);
-            throw new FishException(FishMessages.INVALID_MARK_INDEX);
+            throw new FishException(FishMessages.INVALID_UNMARK_INDEX);
         }
 
         // throw exception if index is invalid
@@ -118,7 +137,7 @@ public class Fish {
         }
 
         // unmark task and return index
-        tasks[index].setIsDoneAs(false);
+        tasks.get(index).setIsDoneAs(false);
         return index;
     }
 
@@ -134,6 +153,39 @@ public class Fish {
         }
         String[] words = sentence.split(" ", 2);
         return words[1];
+    }
+
+    public static int findTaskToDelete(String arg) throws FishException {
+        // convert String arg into Integer index
+        int index;
+        try {
+            index = getTaskIndex(arg);
+        } catch (NumberFormatException e) {
+            System.out.println(FishMessages.INVALID_DELETE_ARG_TYPE);
+            throw new FishException(FishMessages.INVALID_DELETE_INDEX);
+        }
+
+        // throw exception if index is invalid
+        if  (index < 0 || index >= Task.getTaskCount()) {
+            System.out.println("Item number " + (index + 1) + " is out of bounds!");
+            throw new FishException(FishMessages.INVALID_DELETE_INDEX);
+        }
+
+        return index;
+    }
+
+    public static void removeFromList(String arg) throws FishException {
+        // find index of task, if invalid will throw exception
+        int indexToDelete = findTaskToDelete(arg);
+
+        // if valid, reduce task count by one
+        Task.reduceTaskCountByOne();
+
+        // print delete message with the new task count
+        printDeleteItemMessage(indexToDelete);
+
+        // remove the task from tasks
+        tasks.remove(indexToDelete);
     }
 
     // ========= CREATE TASKS METHODS ========= //
@@ -156,7 +208,7 @@ public class Fish {
         }
 
         // create new Deadline
-        tasks[Task.getTaskCount()] = new Deadline(description, deadline);
+        tasks.add(new Deadline(description, deadline));
     }
 
     public static void createNewEvent(String input) throws FishException {
@@ -180,14 +232,14 @@ public class Fish {
         }
 
         // create new Event
-        tasks[Task.getTaskCount()] = new Event(description, from, to);
+        tasks.add(new Event(description, from, to));
     }
 
     public static void createNewTodo(String input) throws FishException {
         if (input.isEmpty()) {
             throw new FishException(FishMessages.INVALID_TODO);
         }
-        tasks[Task.getTaskCount()] = new Todo(input);
+        tasks.add(new Todo(input));
     }
 
     public static int getTaskIndex(String input) {
@@ -213,27 +265,6 @@ public class Fish {
         printAddItemMessage();
     }
 
-    public static void performListOps() {
-        tasks = new Task[100];
-
-        boolean isActive = true;
-
-        Scanner in = new Scanner(System.in);
-
-        while (isActive) {
-            // takes input and parses it into command and arg where possible
-            String line = in.nextLine().strip();
-            String command = filterCommand(line);
-            String arg = filterArg(line);
-
-            try {
-                isActive = handleCommand(command, arg);
-            } catch (FishException e) {
-                printErrorMessage(e);
-            }
-        }
-    }
-
     private static boolean handleCommand(String command, String arg) throws FishException {
         switch (command) {
         case("bye"):
@@ -253,11 +284,34 @@ public class Fish {
             printUnmarkItemMessage(unmarkTaskIndex);
             break;
 
+        case ("delete"):
+            removeFromList(arg);
+            break;
+
         default:
             addToList(command, arg);
             break;
         }
         return true;
+    }
+
+    public static void performListOps() {
+        boolean isActive = true;
+
+        Scanner in = new Scanner(System.in);
+
+        while (isActive) {
+            // takes input and parses it into command and arg where possible
+            String line = in.nextLine().strip();
+            String command = filterCommand(line);
+            String arg = filterArg(line);
+
+            try {
+                isActive = handleCommand(command, arg);
+            } catch (FishException e) {
+                printErrorMessage(e);
+            }
+        }
     }
 
     public static void main(String[] args) {
