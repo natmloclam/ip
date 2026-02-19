@@ -1,6 +1,6 @@
 package Fish.Tasks;
 
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
     protected static int taskCount;
@@ -23,9 +23,7 @@ public class Task {
         return taskCount;
     }
 
-    public String getType() {
-        return "0";
-    }
+    public abstract String getType();
 
     public void setIsDoneAs(boolean isDone) {
         this.isDone = isDone;
@@ -35,4 +33,6 @@ public class Task {
     public String toString() {
         return getStatusIcon()+ " " + description;
     }
+
+    public abstract String toFileFormat();
 }
