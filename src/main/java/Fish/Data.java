@@ -14,11 +14,11 @@ import Fish.Tasks.Task;
 import Fish.Tasks.Todo;
 
 public class Data {
-    public static final String TASK_TODO = "T";
-    public static final String TASK_DEADLINE = "D";
-    public static final String TASK_EVENT = "E";
+    public static final String TASK_TYPE_TODO = "T";
+    public static final String TASK_TYPE_DEADLINE = "D";
+    public static final String TASK_TYPE_EVENT = "E";
 
-    private String filePath;
+    private final String filePath;
 
     public Data(String filePath) {
         this.filePath = filePath;
@@ -44,14 +44,14 @@ public class Data {
 
         Task task;
         switch (type) {
-        case TASK_TODO:
+        case TASK_TYPE_TODO:
             if (words.length != 3) {
                 return;
             }
             task = new Todo(description);
             break;
 
-        case TASK_DEADLINE:
+        case TASK_TYPE_DEADLINE:
             if (words.length != 4) {
                 return;
             }
@@ -59,7 +59,7 @@ public class Data {
             task = new Deadline(description, by);
             break;
 
-        case TASK_EVENT:
+        case TASK_TYPE_EVENT:
             if (words.length != 5) {
                 return;
             }
