@@ -11,7 +11,7 @@ public class TaskList {
     public static final String TASK_TYPE_EVENT = "event";
     public static final String TASK_TYPE_DEADLINE = "deadline";
 
-    private ArrayList<Task> tasks = new ArrayList<>();
+    private ArrayList<Task> tasks;
 
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = tasks;
@@ -25,69 +25,41 @@ public class TaskList {
         return tasks;
     }
 
-    public void addTask(Task task) {
-        tasks.add(task);
-    }
-
     // ========= OPERATION METHODS ========= //
-
-    public int markTask(String arg) throws FishException {
-        // convert String arg into Integer index
+    private int verifyIndex(String arg, String invalidTypeMessage, String errorMessage) throws FishException {
         int index;
+        // check if index is valid type (int)
         try {
             index = getTaskIndex(arg);
         } catch (NumberFormatException e) {
-            System.out.println(FishMessages.INVALID_MARK_ARG_TYPE);
-            throw new FishException(FishMessages.INVALID_MARK_INDEX);
+            System.out.println(invalidTypeMessage);
+            throw new FishException(errorMessage);
         }
 
-        // throw exception if index is invalid
+        // check if index is in valid range
         if (index < 0 || index >= Task.getTaskCount()) {
             System.out.println("Item number " + (index + 1) + " is out of bounds!");
-            throw new FishException(FishMessages.INVALID_MARK_INDEX);
+            throw new FishException(errorMessage);
         }
+        return index;
+    }
+
+    public int markTask(String arg) throws FishException {
+        int index = verifyIndex(arg, FishMessages.INVALID_MARK_ARG_TYPE, FishMessages.INVALID_MARK_INDEX);
 
         tasks.get(index).setIsDoneAs(true);
         return index;
     }
 
     public int unmarkTask(String arg) throws FishException {
-        // convert String arg into Integer index
-        int index;
-        try {
-            index = getTaskIndex(arg);
-        } catch (NumberFormatException e) {
-            System.out.println(FishMessages.INVALID_MARK_ARG_TYPE);
-            throw new FishException(FishMessages.INVALID_UNMARK_INDEX);
-        }
-
-        // throw exception if index is invalid
-        if (index < 0 || index >= Task.getTaskCount()) {
-            System.out.println("Item number " + (index + 1) + " is out of bounds!");
-            throw new FishException(FishMessages.INVALID_UNMARK_INDEX);
-        }
+        int index = verifyIndex(arg, FishMessages.INVALID_MARK_ARG_TYPE, FishMessages.INVALID_UNMARK_INDEX);
 
         tasks.get(index).setIsDoneAs(false);
         return index;
     }
 
     public int findTaskToDelete(String arg) throws FishException {
-        // convert String arg into Integer index
-        int index;
-        try {
-            index = getTaskIndex(arg);
-        } catch (NumberFormatException e) {
-            System.out.println(FishMessages.INVALID_DELETE_ARG_TYPE);
-            throw new FishException(FishMessages.INVALID_DELETE_INDEX);
-        }
-
-        // throw exception if index is invalid
-        if  (index < 0 || index >= Task.getTaskCount()) {
-            System.out.println("Item number " + (index + 1) + " is out of bounds!");
-            throw new FishException(FishMessages.INVALID_DELETE_INDEX);
-        }
-
-        return index;
+        return verifyIndex(arg, FishMessages.INVALID_DELETE_ARG_TYPE, FishMessages.INVALID_DELETE_INDEX);
     }
 
     public void removeFromList(String arg) throws FishException {
