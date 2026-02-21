@@ -17,9 +17,16 @@ public class Fish {
     private static Data data;
     private static Ui ui;
 
+    public Fish(String filePath) {
+        data = new Data(filePath);
+        tasks = new TaskList(data.load());
+        ui = new Ui();
+    }
+
     private static boolean handleCommand(String command, String arg) throws FishException {
         switch (command) {
         case COMMAND_EXIT:
+            Printer.printBye();
             return false;
 
         case COMMAND_LIST:
@@ -51,29 +58,29 @@ public class Fish {
         return true;
     }
 
-    public static void performListOps() {
+    public static void run() {
+        Printer.printIntro();
+
         boolean isActive = true;
 
-        data = new Data(FISH_TXT_FILE_PATH);
-        tasks = new TaskList(data.load());
-        ui = new Ui();
-
-        while (isActive) {
-            String input = ui.readInput();
-            String command = Parser.filterCommand(input);
-            String arg = Parser.filterArg(input);
-
+        do {
             try {
+                String input = ui.readInput();
+                Printer.printBar();
+                String command = Parser.filterCommand(input);
+                String arg = Parser.filterArg(input);
+
                 isActive = handleCommand(command, arg);
             } catch (FishException e) {
                 Printer.printErrorMessage(e);
+            } finally {
+                Printer.printBar();
+                Printer.printNewline();
             }
-        }
+        } while (isActive);
     }
 
     public static void main(String[] args) {
-        Printer.printIntro();
-        performListOps();
-        Printer.printBye();
+        new Fish(FISH_TXT_FILE_PATH).run();
     }
 }
