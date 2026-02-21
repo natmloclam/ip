@@ -1,7 +1,5 @@
 package Fish;
 
-import java.util.Scanner;
-
 import Fish.Helpers.FishException;
 import Fish.Helpers.Printer;
 import Fish.Tasks.TaskList;
@@ -17,41 +15,7 @@ public class Fish {
 
     private static TaskList tasks;
     private static Data data;
-
-    public static String filterCommand(String sentence) {
-        String[] words = sentence.split(" ", 2);
-        return words[0];
-    }
-
-    public static String filterArg(String sentence) {
-        String[] splitSentence = sentence.split(" ");
-        if (splitSentence.length < 2) {
-            return "";
-        }
-        String[] words = sentence.split(" ", 2);
-        return words[1];
-    }
-
-    public static void performListOps() {
-        boolean isActive = true;
-
-        data = new Data(FISH_TXT_FILE_PATH);
-        tasks = new TaskList(data.load());
-
-        Scanner in = new Scanner(System.in);
-
-        while (isActive) {
-            String line = in.nextLine().strip();
-            String command = filterCommand(line);
-            String arg = filterArg(line);
-
-            try {
-                isActive = handleCommand(command, arg);
-            } catch (FishException e) {
-                Printer.printErrorMessage(e);
-            }
-        }
-    }
+    private static Ui ui;
 
     private static boolean handleCommand(String command, String arg) throws FishException {
         switch (command) {
@@ -85,6 +49,26 @@ public class Fish {
             break;
         }
         return true;
+    }
+
+    public static void performListOps() {
+        boolean isActive = true;
+
+        data = new Data(FISH_TXT_FILE_PATH);
+        tasks = new TaskList(data.load());
+        ui = new Ui();
+
+        while (isActive) {
+            String input = ui.readInput();
+            String command = Parser.filterCommand(input);
+            String arg = Parser.filterArg(input);
+
+            try {
+                isActive = handleCommand(command, arg);
+            } catch (FishException e) {
+                Printer.printErrorMessage(e);
+            }
+        }
     }
 
     public static void main(String[] args) {
