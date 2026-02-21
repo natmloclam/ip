@@ -19,17 +19,17 @@ public class Printer {
         printNewline();
     }
 
-    public static void printItem(int i) {
+    public static void printItem(TaskList tasks, int i) {
         System.out.print("     " + (i + 1) + "."); // prints item number
-        Task task = TaskList.getTask(i);
-        System.out.println(task.toString());
+        Task task = tasks.getTask(i);
+        System.out.println(task);
     }
 
-    public static void printList() {
+    public static void printList(TaskList tasks) {
         printBar();
         System.out.println("Now get to work");
         for (int i = 0; i < Task.getTaskCount(); i++) {
-            printItem(i);
+            printItem(tasks, i);
         }
         printBar();
         printNewline();
@@ -49,35 +49,35 @@ public class Printer {
         System.out.println();
     }
 
-    public static void printMarkItemMessage(int i) {
+    public static void printMarkItemMessage(TaskList tasks, int i) {
         printBar();
         System.out.println("Not bad huh");
-        printItem(i);
+        printItem(tasks, i);
         printBar();
         printNewline();
     }
 
-    public static void printUnmarkItemMessage(int i) {
+    public static void printUnmarkItemMessage(TaskList tasks, int i) {
         printBar();
         System.out.println("Stop being a bum");
-        printItem(i);
+        printItem(tasks, i);
         printBar();
         printNewline();
     }
 
-    public static void printAddItemMessage() {
+    public static void printAddItemMessage(TaskList tasks) {
         printBar();
         System.out.println("Lookin busy today");
-        printItem(Task.getTaskCount() - 1);
+        printItem(tasks, Task.getTaskCount() - 1);
         printTaskCount();
         printBar();
         printNewline();
     }
 
-    public static void printDeleteItemMessage(int index) {
+    public static void printDeleteItemMessage(TaskList tasks, int index) {
         printBar();
         System.out.println("Deleting your history hee hee");
-        printItem(index);
+        printItem(tasks, index);
         printTaskCount();
         printBar();
         printNewline();

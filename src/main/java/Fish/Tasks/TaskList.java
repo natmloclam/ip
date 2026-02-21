@@ -11,14 +11,27 @@ public class TaskList {
     public static final String TASK_TYPE_EVENT = "event";
     public static final String TASK_TYPE_DEADLINE = "deadline";
 
-    public static ArrayList<Task> tasks = new ArrayList<>();
+    private ArrayList<Task> tasks = new ArrayList<>();
 
-    // ========= OPERATION METHODS ========= //
-    public static Task getTask(int i) {
+    public TaskList(ArrayList<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    public Task getTask(int i) {
         return tasks.get(i);
     }
 
-    public static int markTask(String arg) throws FishException {
+    public ArrayList<Task> getTasks() {
+        return tasks;
+    }
+
+    public void addTask(Task task) {
+        tasks.add(task);
+    }
+
+    // ========= OPERATION METHODS ========= //
+
+    public int markTask(String arg) throws FishException {
         // convert String arg into Integer index
         int index;
         try {
@@ -34,12 +47,11 @@ public class TaskList {
             throw new FishException(FishMessages.INVALID_MARK_INDEX);
         }
 
-        // mark test and return index
         tasks.get(index).setIsDoneAs(true);
         return index;
     }
 
-    public static int unmarkTask(String arg) throws FishException {
+    public int unmarkTask(String arg) throws FishException {
         // convert String arg into Integer index
         int index;
         try {
@@ -55,12 +67,11 @@ public class TaskList {
             throw new FishException(FishMessages.INVALID_UNMARK_INDEX);
         }
 
-        // unmark task and return index
         tasks.get(index).setIsDoneAs(false);
         return index;
     }
 
-    public static int findTaskToDelete(String arg) throws FishException {
+    public int findTaskToDelete(String arg) throws FishException {
         // convert String arg into Integer index
         int index;
         try {
@@ -79,31 +90,23 @@ public class TaskList {
         return index;
     }
 
-    public static void removeFromList(String arg) throws FishException {
-        // find index of task, if invalid will throw exception
+    public void removeFromList(String arg) throws FishException {
         int indexToDelete = findTaskToDelete(arg);
-
-        // if valid, reduce task count by one
         Task.reduceTaskCountByOne();
-
-        // print delete message with the new task count
-        Printer.printDeleteItemMessage(indexToDelete);
-
-        // remove the task from tasks
+        Printer.printDeleteItemMessage(this, indexToDelete);
         tasks.remove(indexToDelete);
     }
 
     // ========= CREATE TASKS METHODS ========= //
-    public static void createNewDeadline(String input) throws FishException {
-        // get index of /by
+    public void createNewDeadline(String input) throws FishException {
+        // get index of "/by"
         int deadlineByPosition = input.indexOf("/by");
 
-        // throw exception if no /by
+        // throw exception if no "/by"
         if (deadlineByPosition == -1) {
             throw new FishException(FishMessages.INVALID_DEADLINE);
         }
 
-        // extract description and deadline from input
         String description = input.substring(0, deadlineByPosition).strip();
         String deadline = input.substring(deadlineByPosition + 3).strip();
 
@@ -112,21 +115,19 @@ public class TaskList {
             throw new FishException(FishMessages.INVALID_DEADLINE);
         }
 
-        // create new Deadline
         tasks.add(new Deadline(description, deadline));
     }
 
-    public static void createNewEvent(String input) throws FishException {
-        // get indices of /from and /to
+    public void createNewEvent(String input) throws FishException {
+        // get indices of "/from" and "/to"
         int eventFromPosition = input.indexOf("/from");
         int eventToPosition = input.indexOf("/to");
 
-        // throw exception if /from or /to is missing
+        // throw exception if "/from" or "/to" is missing
         if (eventFromPosition == -1 || eventToPosition == -1) {
             throw new FishException(FishMessages.INVALID_EVENT);
         }
 
-        // extract description, from and to from input
         String description = input.substring(0, eventFromPosition).strip();
         String from = input.substring(eventFromPosition + 5, eventToPosition).strip();
         String to = input.substring(eventToPosition + 3).strip();
@@ -136,23 +137,22 @@ public class TaskList {
             throw new FishException(FishMessages.INVALID_EVENT);
         }
 
-        // create new Event
         tasks.add(new Event(description, from, to));
     }
 
-    public static void createNewTodo(String input) throws FishException {
+    public void createNewTodo(String input) throws FishException {
         if (input.isEmpty()) {
             throw new FishException(FishMessages.INVALID_TODO);
         }
         tasks.add(new Todo(input));
     }
 
-    public static int getTaskIndex(String input) {
+    public int getTaskIndex(String input) {
         return Integer.parseInt(input) - 1;
     }
 
     // ========= HIGHER LEVEL FUNCTIONS ========= //
-    public static void addToList(String command, String item) throws FishException {
+    public void addToList(String command, String item) throws FishException {
         switch (command) {
         case TASK_TYPE_TODO:
             createNewTodo(item);
@@ -167,6 +167,6 @@ public class TaskList {
             System.out.println(command + " is not a valid command!");
             throw new FishException(FishMessages.INVALID_COMMAND);
         }
-        Printer.printAddItemMessage();
+        Printer.printAddItemMessage(this);
     }
 }
