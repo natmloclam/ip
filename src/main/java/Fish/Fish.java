@@ -7,11 +7,16 @@ import Fish.Helpers.Printer;
 import Fish.Tasks.TaskList;
 
 public class Fish {
+    private static final String FISH_TXT_FILE_PATH = "data/fish.txt";
+
     public static final String COMMAND_EXIT = "bye";
     public static final String COMMAND_LIST = "list";
     public static final String COMMAND_MARK = "mark";
     public static final String COMMAND_UNMARK = "unmark";
     public static final String COMMAND_DELETE = "delete";
+
+    private static TaskList tasks;
+    private static Data data;
 
     public static String filterCommand(String sentence) {
         String[] words = sentence.split(" ", 2);
@@ -30,13 +35,12 @@ public class Fish {
     public static void performListOps() {
         boolean isActive = true;
 
-        // try to load from data/fish.txt - if unable to, starts from empty list
-        TaskList.tasks = Data.load();
+        data = new Data(FISH_TXT_FILE_PATH);
+        tasks = new TaskList(data.load());
 
         Scanner in = new Scanner(System.in);
 
         while (isActive) {
-            // takes input and parses it into command and arg where possible
             String line = in.nextLine().strip();
             String command = filterCommand(line);
             String arg = filterArg(line);
@@ -55,29 +59,29 @@ public class Fish {
             return false;
 
         case COMMAND_LIST:
-            Printer.printList();
+            Printer.printList(tasks);
             break;
 
         case COMMAND_MARK:
-            int markTaskIndex = TaskList.markTask(arg);
-            Printer.printMarkItemMessage(markTaskIndex);
-            Data.save(TaskList.tasks);
+            int markTaskIndex = tasks.markTask(arg);
+            Printer.printMarkItemMessage(tasks, markTaskIndex);
+            data.save(tasks.getTasks());
             break;
 
         case COMMAND_UNMARK:
-            int unmarkTaskIndex = TaskList.unmarkTask(arg);
-            Printer.printUnmarkItemMessage(unmarkTaskIndex);
-            Data.save(TaskList.tasks);
+            int unmarkTaskIndex = tasks.unmarkTask(arg);
+            Printer.printUnmarkItemMessage(tasks, unmarkTaskIndex);
+            data.save(tasks.getTasks());
             break;
 
         case COMMAND_DELETE:
-            TaskList.removeFromList(arg);
-            Data.save(TaskList.tasks);
+            tasks.removeFromList(arg);
+            data.save(tasks.getTasks());
             break;
 
         default:
-            TaskList.addToList(command, arg);
-            Data.save(TaskList.tasks);
+            tasks.addToList(command, arg);
+            data.save(tasks.getTasks());
             break;
         }
         return true;

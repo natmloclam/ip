@@ -14,9 +14,17 @@ import Fish.Tasks.Task;
 import Fish.Tasks.Todo;
 
 public class Data {
-    private static final String FISH_TXT_FILE_PATH = "data/fish.txt";
+    public static final String TASK_TODO = "T";
+    public static final String TASK_DEADLINE = "D";
+    public static final String TASK_EVENT = "E";
 
-    public static void addToTasks(ArrayList<Task> tasks, String line) {
+    private String filePath;
+
+    public Data(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public void addToTasks(ArrayList<Task> tasks, String line) {
         // if a line has less than 3 words, ignores that line
         String[] words = line.split(" \\| ");
         if (words.length < 3) {
@@ -36,16 +44,14 @@ public class Data {
 
         Task task;
         switch (type) {
-        case "T":
-            // error checking - todos should have exactly 3 words
+        case TASK_TODO:
             if (words.length != 3) {
                 return;
             }
             task = new Todo(description);
             break;
 
-        case "D":
-            // error checking - deadlines should have exactly 4 words
+        case TASK_DEADLINE:
             if (words.length != 4) {
                 return;
             }
@@ -53,8 +59,7 @@ public class Data {
             task = new Deadline(description, by);
             break;
 
-        case "E":
-            // error checking - events should have exactly 5 words
+        case TASK_EVENT:
             if (words.length != 5) {
                 return;
             }
@@ -71,8 +76,8 @@ public class Data {
         tasks.add(task);
     }
 
-    public static void readFileContents(ArrayList<Task> tasks) throws IOException {
-        File f = new File(FISH_TXT_FILE_PATH);
+    public void readFileContents(ArrayList<Task> tasks) throws IOException {
+        File f = new File(filePath);
         Scanner s = new Scanner(f);
         while (s.hasNextLine()) {
             String line = s.nextLine();
@@ -80,7 +85,7 @@ public class Data {
         }
     }
 
-    public static ArrayList<Task> load() {
+    public ArrayList<Task> load() {
         ArrayList<Task> tasks = new ArrayList<>();
 
         try {
@@ -91,9 +96,9 @@ public class Data {
         return tasks;
     }
 
-    public static void save(ArrayList<Task> tasks) throws FishException {
+    public void save(ArrayList<Task> tasks) throws FishException {
         try {
-            File file = new File(FISH_TXT_FILE_PATH);
+            File file = new File(filePath);
             File parentDir = file.getParentFile();
 
             if (parentDir != null && !parentDir.exists()) {
@@ -103,7 +108,7 @@ public class Data {
                 }
             }
 
-            FileWriter writer = new FileWriter(FISH_TXT_FILE_PATH);
+            FileWriter writer = new FileWriter(filePath);
             for (Task task : tasks) {
                 writer.write(task.toFileFormat() + System.lineSeparator());
             }
