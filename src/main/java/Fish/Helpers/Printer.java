@@ -13,10 +13,7 @@ public class Printer {
     }
 
     public static void printErrorMessage(Exception e) {
-        printBar();
         System.out.println(e.getMessage());
-        printBar();
-        printNewline();
     }
 
     public static void printItem(TaskList tasks, int i) {
@@ -26,19 +23,14 @@ public class Printer {
     }
 
     public static void printList(TaskList tasks) {
-        printBar();
         System.out.println("Now get to work");
         for (int i = 0; i < Task.getTaskCount(); i++) {
             printItem(tasks, i);
         }
-        printBar();
-        printNewline();
     }
 
     public static void printBye() {
-        printBar();
         System.out.print(FishMessages.BYE);
-        printBar();
     }
 
     public static void printBar() {
@@ -50,37 +42,25 @@ public class Printer {
     }
 
     public static void printMarkItemMessage(TaskList tasks, int i) {
-        printBar();
         System.out.println("Not bad huh");
         printItem(tasks, i);
-        printBar();
-        printNewline();
     }
 
     public static void printUnmarkItemMessage(TaskList tasks, int i) {
-        printBar();
         System.out.println("Stop being a bum");
         printItem(tasks, i);
-        printBar();
-        printNewline();
     }
 
     public static void printAddItemMessage(TaskList tasks) {
-        printBar();
         System.out.println("Lookin busy today");
         printItem(tasks, Task.getTaskCount() - 1);
         printTaskCount();
-        printBar();
-        printNewline();
     }
 
     public static void printDeleteItemMessage(TaskList tasks, int index) {
-        printBar();
         System.out.println("Deleting your history hee hee");
         printItem(tasks, index);
         printTaskCount();
-        printBar();
-        printNewline();
     }
 
     public static void printTaskCount() {

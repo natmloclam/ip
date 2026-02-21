@@ -64,8 +64,8 @@ Deleting your history hee hee
     You have 2 tasks. Get to work
     ____________________________________________________________
 
-Task index should be a number
     ____________________________________________________________
+Task index should be a number
     Use a valid task index!
     Message format: delete <task index>
     Use list to find task index
@@ -87,3 +87,4 @@ Deleting your history hee hee
     Goodbye land dweller
     ***swims away***
     ____________________________________________________________
+
