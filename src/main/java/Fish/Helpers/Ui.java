@@ -10,6 +10,6 @@ public class Ui {
     }
 
     public String readInput() {
-        return in.nextLine();
+        return in.nextLine().strip();
     }
 }
