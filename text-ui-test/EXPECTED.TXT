@@ -21,7 +21,7 @@ Lookin busy today
 
     ____________________________________________________________
 Lookin busy today
-     2.[D][ ] return book (by: June 6th)
+     2.[D][ ] return book (by: Jun 30 2026, 6:00pm)
     You have 2 tasks. Get to work
     ____________________________________________________________
 
@@ -43,19 +43,34 @@ Lookin busy today
 
     ____________________________________________________________
     Enter a deadline bozo
-     Message format: deadline <description> /by <deadline>
+    Message format: deadline <description> /by <deadline>
+    ____________________________________________________________
+
+    ____________________________________________________________
+    Invalid date-time format!
+    Format: yyyy-mm-dd HH:mm
+    Time is in 24 hour clock format
+    ____________________________________________________________
+
+    ____________________________________________________________
+Here are the deadlines to be done by Jun 30 2026:
+     1. [D][ ] return book (by: Jun 30 2026, 6:00pm)
     ____________________________________________________________
 
     ____________________________________________________________
 Not bad huh
-     2.[D][X] return book (by: June 6th)
+     2.[D][X] return book (by: Jun 30 2026, 6:00pm)
+    ____________________________________________________________
+
+    ____________________________________________________________
+No deadlines found
     ____________________________________________________________
 
     ____________________________________________________________
 Now get to work
-     1.[T][ ] return book
-     2.[D][X] return book (by: June 6th)
-     3.[E][ ] project meeting (from: Aug 6th 2pm, to: 4pm)
+     1. [T][ ] return book
+     2. [D][X] return book (by: Jun 30 2026, 6:00pm)
+     3. [E][ ] project meeting (from: Aug 6th 2pm, to: 4pm)
     ____________________________________________________________
 
     ____________________________________________________________
@@ -73,7 +88,7 @@ Task index should be a number
 
     ____________________________________________________________
 Deleting your history hee hee
-     2.[D][X] return book (by: June 6th)
+     2.[D][X] return book (by: Jun 30 2026, 6:00pm)
     You have 1 task. Get to work
     ____________________________________________________________
 

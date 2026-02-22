@@ -32,11 +32,13 @@ public class FishMessages {
                         list - I'm gonna release the list
                         mark - Mark a task as done
                         unmark - Unmark a task
-                        delete - Delete a task\
+                        delete - Delete a task
+                        find - Search for task descriptions
+                        doby - Check for deadlines by some date\
                     """;
 
     public static final String INVALID_DEADLINE =
-            "    Enter a deadline bozo\n " +
+            "    Enter a deadline bozo\n" +
             "    Message format: deadline <description> /by <deadline>";
 
     public static final String INVALID_EVENT =
