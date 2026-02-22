@@ -1,5 +1,8 @@
 package Fish.Helpers;
 
+/***
+ * A class containing constants of messages that are printed by Fish
+ */
 public class FishMessages {
     public static final String BAR = "    ____________________________________________________________\n";
     public static final String INTRO =

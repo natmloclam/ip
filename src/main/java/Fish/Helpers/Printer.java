@@ -7,6 +7,9 @@ import Fish.Parser.DateTimeParser;
 import Fish.Tasks.TaskList;
 import Fish.Tasks.Task;
 
+/**
+ * The class responsible for printing output and messages for the user
+ */
 public class Printer {
 
     public static final String SPACES = "    ";

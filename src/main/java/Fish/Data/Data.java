@@ -14,6 +14,11 @@ import Fish.Tasks.Event;
 import Fish.Tasks.Task;
 import Fish.Tasks.Todo;
 
+/**
+ * Class that is responsible for reading and writing to files to keep task list information
+ * for long term storage. This allows user to continue where they left off even after Fish program
+ * has exited.
+ */
 public class Data {
     public static final String TASK_TYPE_TODO = "T";
     public static final String TASK_TYPE_DEADLINE = "D";
@@ -21,10 +26,21 @@ public class Data {
 
     private final String filePath;
 
+    /**
+     * Constructor for the Data class
+     * @param filePath specifies the relative path of where the data file is to be stored
+     */
     public Data(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Each line contains information about a single task. This method creates a new Task and
+     * stores it into tasks
+     *
+     * @param tasks ArrayList of Task objects that stores info from the file
+     * @param line Contains info of a single task
+     */
     public void addToTasks(ArrayList<Task> tasks, String line) {
         // if a line has less than 3 words, ignores that line
         String[] words = line.split(" \\| ");
@@ -33,9 +49,8 @@ public class Data {
         }
 
         /*
-        * each line should have minimum of type (T, D, E), isDone, description
-        * deadline has additional by
-        * event has additional from and to
+        * each line should have minimum of 3 parts: type (T, D, E), isDone, description
+        * deadline has 4, event has 5 parts
         * if any line in fish.txt is corrupted - ignores that line
         * fish.txt will be updated using tasks the next time save
         */
@@ -77,6 +92,12 @@ public class Data {
         tasks.add(task);
     }
 
+    /**
+     * Reads the content of the file line by line and loads it into the ArrayList of Tasks.
+     *
+     * @param tasks ArrayList of Task objects that stores info from the file
+     * @throws IOException if unable to read file, tasks will be empty
+     */
     public void readFileContents(ArrayList<Task> tasks) throws IOException {
         File f = new File(filePath);
         Scanner s = new Scanner(f);
@@ -86,6 +107,12 @@ public class Data {
         }
     }
 
+    /**
+     * Load data stored in the filePath and returns an ArrayList of Tasks
+     * which contains the same info
+     *
+     * @return ArrayList of Tasks with the stored info
+     */
     public ArrayList<Task> load() {
         ArrayList<Task> tasks = new ArrayList<>();
 
@@ -97,6 +124,12 @@ public class Data {
         return tasks;
     }
 
+    /**
+     * Takes in an ArrayList of Tasks and stores the info into the filePath
+     *
+     * @param tasks - ArrayList of Tasks with the info to be stored
+     * @throws FishException if unable to create directories for the filePath or if unable to write to file
+     */
     public void save(ArrayList<Task> tasks) throws FishException {
         try {
             File file = new File(filePath);
