@@ -4,7 +4,7 @@ import Fish.Data.Data;
 import Fish.Helpers.FishException;
 import Fish.Tasks.TaskList;
 
-public class AddCommand extends Command{
+public class AddCommand extends Command {
     private final String taskType;
     private final String arg;
 
