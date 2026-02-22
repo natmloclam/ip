@@ -7,6 +7,6 @@ import Fish.Tasks.TaskList;
 public class ListCommand extends Command {
     @Override
     public void execute (TaskList tasks, Data data) {
-        Printer.printList(tasks);
+        Printer.printList(tasks.getTasks());
     }
 }

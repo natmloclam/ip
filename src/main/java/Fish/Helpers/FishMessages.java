@@ -82,4 +82,9 @@ public class FishMessages {
                 Format: yyyy-mm-dd HH:mm
                 Time is in 24 hour clock format\
             """;
+
+    public static final String INVALID_DATE_FORMAT = """
+                Invalid date format!
+                Format yyyy-mm-dd\
+            """;
 }

@@ -1,5 +1,6 @@
 package Fish.Parser;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -36,6 +37,11 @@ public class DateTimeParser {
         return input.format(formatter);
     }
 
+    public static String formatDateOutput(LocalDate input) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy");
+        return input.format(formatter);
+    }
+
     public static LocalDateTime parse(String input) throws FishException {
         String date = filterDate(input);
         String time = filterTime(input);
@@ -43,5 +49,15 @@ public class DateTimeParser {
         String formattedDate = dateFormatter(date);
 
         return LocalDateTime.parse(formattedDate + "T" + time);
+    }
+
+    public static LocalDate parseDate(String input) throws FishException {
+        String data;
+        try {
+            data = dateFormatter(input);
+        } catch (FishException e) {
+            throw new FishException(FishMessages.INVALID_DATE_FORMAT);
+        }
+        return LocalDate.parse(data);
     }
 }

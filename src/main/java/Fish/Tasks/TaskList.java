@@ -2,6 +2,7 @@ package Fish.Tasks;
 
 import static java.util.stream.Collectors.toList;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import Fish.Helpers.FishException;
@@ -82,6 +83,13 @@ public class TaskList {
     public ArrayList<Task> findTasks(String input) {
         return (ArrayList<Task>) tasks.stream()
                 .filter((t) -> t.getDescription().contains(input))
+                .collect(toList());
+    }
+
+    public ArrayList<Task> filterDeadlines(LocalDate by) {
+        return (ArrayList<Task>) tasks.stream()
+                .filter((t) -> t instanceof Deadline)
+                .filter((t) -> !((Deadline) t).getByDate().isAfter(by) && !t.getIsDone())
                 .collect(toList());
     }
 

@@ -17,6 +17,9 @@ public abstract class Task {
         return description;
     }
 
+    public boolean getIsDone() {
+        return isDone;
+    }
 
     public abstract String getType();
 

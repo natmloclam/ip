@@ -1,5 +1,6 @@
 package Fish.Tasks;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import Fish.Parser.DateTimeParser;
@@ -19,6 +20,10 @@ public class Deadline extends Task{
 
     public String getDeadline() {
         return DateTimeParser.formatDateTimeOutput(deadline);
+    }
+
+    public LocalDate getByDate() {
+        return deadline.toLocalDate();
     }
 
     @Override
