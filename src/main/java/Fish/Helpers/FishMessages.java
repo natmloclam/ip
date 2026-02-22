@@ -76,4 +76,10 @@ public class FishMessages {
     public static final String FILE_WRITE_ERROR = "Error writing file";
 
     public static final String MKDIR_ERROR = "Unable to make directory: ";
+
+    public static final String INVALID_DATE_TIME_FORMAT = """
+                Invalid date-time format!
+                Format: yyyy-mm-dd HH:mm
+                Time is in 24 hour clock format\
+            """;
 }

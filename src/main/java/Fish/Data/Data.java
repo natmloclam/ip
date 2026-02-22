@@ -3,6 +3,7 @@ package Fish.Data;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -55,7 +56,7 @@ public class Data {
             if (words.length != 4) {
                 return;
             }
-            String by = words[3];
+            LocalDateTime by = LocalDateTime.parse(words[3]);
             task = new Deadline(description, by);
             break;
 

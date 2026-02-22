@@ -1,0 +1,41 @@
+package Fish.Parser;
+
+import java.time.LocalDateTime;
+
+import Fish.Helpers.FishException;
+import Fish.Helpers.FishMessages;
+
+public class DateTimeParser {
+
+    // date input in the form yyyy-mm-dd
+    public static String filterDate(String input) {
+        String[] words = input.split(" ", 2);
+        return words[0].strip();
+    }
+
+    public static String filterTime(String input) throws FishException {
+        String[] words = input.split(" ", 2);
+        if (words.length < 2) {
+            throw new FishException(FishMessages.INVALID_DATE_TIME_FORMAT);
+        }
+        return words[1].strip();
+    }
+
+    public static String dateFormatter(String input) throws FishException {
+        String[] words = input.split("-");
+        if (words.length != 3) {
+            throw new FishException(FishMessages.INVALID_DATE_TIME_FORMAT);
+        }
+        return words[0] + "-" + String.format("%02d", Integer.parseInt(words[1])) + "-"
+                + String.format("%02d", Integer.parseInt(words[2]));
+    }
+
+    public static LocalDateTime parse(String input) throws FishException {
+        String date = filterDate(input);
+        String time = filterTime(input);
+
+        String formattedDate = dateFormatter(date);
+
+        return LocalDateTime.parse(formattedDate + "T" + time);
+    }
+}

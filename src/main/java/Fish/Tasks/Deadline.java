@@ -1,9 +1,12 @@
 package Fish.Tasks;
 
-public class Deadline extends Task{
-    protected String deadline;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-    public Deadline(String description, String deadline) {
+public class Deadline extends Task{
+    protected LocalDateTime deadline;
+
+    public Deadline(String description, LocalDateTime deadline) {
         super(description);
         this.deadline = deadline;
     }
@@ -14,16 +17,17 @@ public class Deadline extends Task{
     }
 
     public String getDeadline() {
-        return deadline;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy, HH:mm");
+        return deadline.format(formatter);
     }
 
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + deadline + ")";
+        return "[D]" + super.toString() + " (by: " + getDeadline() + ")";
     }
 
     @Override
     public String toFileFormat() {
         return getType() + " | " + (isDone ? 1 : 0) + " | "
-                + getDescription() + " | " + getDeadline();
+                + getDescription() + " | " + deadline.toString();
     }
 }

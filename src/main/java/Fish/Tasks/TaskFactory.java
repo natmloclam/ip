@@ -1,7 +1,11 @@
 package Fish.Tasks;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+
 import Fish.Helpers.FishException;
 import Fish.Helpers.FishMessages;
+import Fish.Parser.DateTimeParser;
 
 public class TaskFactory {
     public static Task createTask(String taskType, String arg) throws FishException {
@@ -40,7 +44,14 @@ public class TaskFactory {
             throw new FishException(FishMessages.INVALID_DEADLINE);
         }
 
-        return new Deadline(description, deadline);
+        LocalDateTime formattedDeadline;
+        try {
+            formattedDeadline = DateTimeParser.parse(deadline);
+        } catch (DateTimeParseException e) {
+            throw new FishException(FishMessages.INVALID_DATE_TIME_FORMAT);
+        }
+
+        return new Deadline(description, formattedDeadline);
     }
 
     public static Task createEvent(String input) throws FishException {
