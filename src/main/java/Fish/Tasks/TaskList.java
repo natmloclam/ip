@@ -1,5 +1,7 @@
 package Fish.Tasks;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.ArrayList;
 
 import Fish.Helpers.FishException;
@@ -75,6 +77,12 @@ public class TaskList {
 
     public int getTaskIndex(String input) {
         return Integer.parseInt(input) - 1;
+    }
+
+    public ArrayList<Task> findTasks(String input) {
+        return (ArrayList<Task>) tasks.stream()
+                .filter((t) -> t.getDescription().contains(input))
+                .collect(toList());
     }
 
     // ========= HIGHER LEVEL FUNCTIONS ========= //

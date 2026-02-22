@@ -1,7 +1,8 @@
 package Fish.Tasks;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
+import Fish.Parser.DateTimeParser;
 
 public class Deadline extends Task{
     protected LocalDateTime deadline;
@@ -17,10 +18,10 @@ public class Deadline extends Task{
     }
 
     public String getDeadline() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy, HH:mm");
-        return deadline.format(formatter);
+        return DateTimeParser.formatDateTimeOutput(deadline);
     }
 
+    @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + getDeadline() + ")";
     }

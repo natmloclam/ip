@@ -4,6 +4,7 @@ import Fish.Commands.AddCommand;
 import Fish.Commands.Command;
 import Fish.Commands.DeleteCommand;
 import Fish.Commands.ExitCommand;
+import Fish.Commands.FindCommand;
 import Fish.Commands.ListCommand;
 import Fish.Commands.MarkCommand;
 import Fish.Commands.UnmarkCommand;
@@ -14,6 +15,7 @@ public class Parser {
     public static final String COMMAND_MARK = "mark";
     public static final String COMMAND_UNMARK = "unmark";
     public static final String COMMAND_DELETE = "delete";
+    public static final String COMMAND_FIND = "find";
 
     public static String filterCommand(String sentence) {
         String[] words = sentence.split(" ", 2);
@@ -39,6 +41,7 @@ public class Parser {
             case COMMAND_MARK -> new MarkCommand(arg);
             case COMMAND_UNMARK -> new UnmarkCommand(arg);
             case COMMAND_DELETE -> new DeleteCommand(arg);
+            case COMMAND_FIND -> new FindCommand(arg);
             default -> new AddCommand(command, arg);
         };
     }

@@ -1,5 +1,7 @@
 package Fish.Helpers;
 
+import java.util.ArrayList;
+
 import Fish.Tasks.TaskList;
 import Fish.Tasks.Task;
 
@@ -12,6 +14,18 @@ public class Printer {
         System.out.print(FishMessages.INTRO);
         printBar();
         printNewline();
+    }
+
+    public static void printBye() {
+        System.out.print(FishMessages.BYE);
+    }
+
+    public static void printBar() {
+        System.out.print(FishMessages.BAR);
+    }
+
+    public static void printNewline() {
+        System.out.println();
     }
 
     public static void printErrorMessage(Exception e) {
@@ -31,16 +45,16 @@ public class Printer {
         }
     }
 
-    public static void printBye() {
-        System.out.print(FishMessages.BYE);
-    }
+    public static void printFilteredList(ArrayList<Task> filteredTasks, String input) {
+        if  (filteredTasks.isEmpty()) {
+            System.out.println("No tasks found");
+            return;
+        }
 
-    public static void printBar() {
-        System.out.print(FishMessages.BAR);
-    }
-
-    public static void printNewline() {
-        System.out.println();
+        System.out.println("Here are the tasks that contain " + input + ":");
+        for (int i = 0; i  < filteredTasks.size(); i++) {
+            System.out.println(SPACES + " " + (i + 1) + ". " + filteredTasks.get(i));
+        }
     }
 
     public static void printMarkItemMessage(TaskList tasks, int i) {

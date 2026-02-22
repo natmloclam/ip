@@ -1,6 +1,7 @@
 package Fish.Parser;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import Fish.Helpers.FishException;
 import Fish.Helpers.FishMessages;
@@ -28,6 +29,11 @@ public class DateTimeParser {
         }
         return words[0] + "-" + String.format("%02d", Integer.parseInt(words[1])) + "-"
                 + String.format("%02d", Integer.parseInt(words[2]));
+    }
+
+    public static String formatDateTimeOutput(LocalDateTime input) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy, h:mma");
+        return input.format(formatter);
     }
 
     public static LocalDateTime parse(String input) throws FishException {
