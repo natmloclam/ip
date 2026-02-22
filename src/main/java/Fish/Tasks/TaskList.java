@@ -25,6 +25,10 @@ public class TaskList {
         return tasks;
     }
 
+    public int getTaskCount() {
+        return tasks.size();
+    }
+
     // ========= OPERATION METHODS ========= //
     private int verifyIndex(String arg, String invalidTypeMessage, String errorMessage) throws FishException {
         int index;
@@ -37,7 +41,7 @@ public class TaskList {
         }
 
         // check if index is in valid range
-        if (index < 0 || index >= Task.getTaskCount()) {
+        if (index < 0 || index >= getTaskCount()) {
             System.out.println("Item number " + (index + 1) + " is out of bounds!");
             throw new FishException(errorMessage);
         }
@@ -58,15 +62,15 @@ public class TaskList {
         return index;
     }
 
-    public int findTaskToDelete(String arg) throws FishException {
+    public int findTaskIndexToDelete(String arg) throws FishException {
         return verifyIndex(arg, FishMessages.INVALID_DELETE_ARG_TYPE, FishMessages.INVALID_DELETE_INDEX);
     }
 
     public void removeFromList(String arg) throws FishException {
-        int indexToDelete = findTaskToDelete(arg);
-        Task.reduceTaskCountByOne();
+        int indexToDelete = findTaskIndexToDelete(arg);
         Printer.printDeleteItemMessage(this, indexToDelete);
         tasks.remove(indexToDelete);
+        Printer.printTaskCount(this);
     }
 
     public int getTaskIndex(String input) {

@@ -3,12 +3,10 @@ package Fish.Tasks;
 public abstract class Task {
     protected String description;
     protected boolean isDone;
-    protected static int taskCount;
 
     public Task(String description) {
         this.description = description;
         isDone = false;
-        taskCount++;
     }
 
     public String getStatusIcon() {
@@ -19,9 +17,6 @@ public abstract class Task {
         return description;
     }
 
-    public static int getTaskCount() {
-        return taskCount;
-    }
 
     public abstract String getType();
 
@@ -32,10 +27,6 @@ public abstract class Task {
     // returns status icon + description
     public String toString() {
         return getStatusIcon()+ " " + description;
-    }
-
-    public static void reduceTaskCountByOne() {
-        taskCount--;
     }
 
     public abstract String toFileFormat();

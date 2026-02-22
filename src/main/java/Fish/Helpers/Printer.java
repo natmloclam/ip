@@ -5,6 +5,8 @@ import Fish.Tasks.Task;
 
 public class Printer {
 
+    public static final String SPACES = "    ";
+
     public static void printIntro() {
         printBar();
         System.out.print(FishMessages.INTRO);
@@ -17,14 +19,14 @@ public class Printer {
     }
 
     public static void printItem(TaskList tasks, int i) {
-        System.out.print("     " + (i + 1) + "."); // prints item number
+        System.out.print(SPACES + " " + (i + 1) + "."); // prints item number
         Task task = tasks.getTask(i);
         System.out.println(task);
     }
 
     public static void printList(TaskList tasks) {
         System.out.println("Now get to work");
-        for (int i = 0; i < Task.getTaskCount(); i++) {
+        for (int i = 0; i < tasks.getTaskCount(); i++) {
             printItem(tasks, i);
         }
     }
@@ -53,19 +55,18 @@ public class Printer {
 
     public static void printAddItemMessage(TaskList tasks) {
         System.out.println("Lookin busy today");
-        printItem(tasks, Task.getTaskCount() - 1);
-        printTaskCount();
+        printItem(tasks, tasks.getTaskCount() - 1);
+        printTaskCount(tasks);
     }
 
     public static void printDeleteItemMessage(TaskList tasks, int index) {
         System.out.println("Deleting your history hee hee");
         printItem(tasks, index);
-        printTaskCount();
     }
 
-    public static void printTaskCount() {
-        System.out.print("    You have " + (Task.getTaskCount()));
-        if (Task.getTaskCount() == 1) {
+    public static void printTaskCount(TaskList tasks) {
+        System.out.print(SPACES + "You have " + (tasks.getTaskCount()));
+        if (tasks.getTaskCount() == 1) {
             System.out.println(" task. Get to work");
         } else {
             System.out.println(" tasks. Get to work");
