@@ -1,7 +1,10 @@
 package Fish;
 
+import Fish.Data.Data;
 import Fish.Helpers.FishException;
 import Fish.Helpers.Printer;
+import Fish.Helpers.Ui;
+import Fish.Parser.Parser;
 import Fish.Tasks.TaskList;
 
 public class Fish {

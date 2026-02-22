@@ -1,4 +1,4 @@
-package Fish;
+package Fish.Parser;
 
 public class Parser {
     public static String filterCommand(String sentence) {

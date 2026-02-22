@@ -1,4 +1,4 @@
-package Fish;
+package Fish.Helpers;
 
 import java.util.Scanner;
 
