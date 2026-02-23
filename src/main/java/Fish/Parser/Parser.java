@@ -10,6 +10,9 @@ import Fish.Commands.ListCommand;
 import Fish.Commands.MarkCommand;
 import Fish.Commands.UnmarkCommand;
 
+/**
+ * Class that handles the parsing anf verification of user inputs
+ */
 public class Parser {
     public static final String COMMAND_EXIT = "bye";
     public static final String COMMAND_LIST = "list";
@@ -52,7 +55,7 @@ public class Parser {
      * to the command that has been input.
      *
      * @param input input from the user
-     * @return Command object that corresponds
+     * @return the corresponding Command
      */
     public static Command parse(String input) {
         String command = filterCommand(input);

@@ -7,7 +7,18 @@ import Fish.Helpers.FishException;
 import Fish.Helpers.FishMessages;
 import Fish.Parser.DateTimeParser;
 
+/**
+ * Class responsible for creating Tasks based on user input
+ */
 public class TaskFactory {
+    /**
+     * Creates the corresponding task based on the task type input by user
+     *
+     * @param taskType type of task input by user
+     * @param arg the information about the task
+     * @return Task object of taskType and information arg
+     * @throws FishException if user input is invalid
+     */
     public static Task createTask(String taskType, String arg) throws FishException {
         return switch (taskType) {
             case TaskList.TASK_TYPE_TODO -> createTodo(arg);
@@ -20,6 +31,13 @@ public class TaskFactory {
         };
     }
 
+    /**
+     * Creates a new todo
+     *
+     * @param input user input description of the todo
+     * @return a new Todo
+     * @throws FishException if no description is provided
+     */
     public static Task createTodo(String input) throws FishException {
         if (input.isEmpty()) {
             throw new FishException(FishMessages.INVALID_TODO);
@@ -27,6 +45,14 @@ public class TaskFactory {
         return new Todo(input);
     }
 
+    /**
+     * Creates a new deadline
+     *
+     * @param input user input description and deadline
+     * @return a new Deadline
+     * @throws FishException if no description or deadline is provided, message format is incorrect or
+     * deadline is in incorrect format
+     */
     public static Task createDeadline(String input) throws FishException {
         // get index of "/by"
         int deadlineByPosition = input.indexOf("/by");
@@ -54,6 +80,13 @@ public class TaskFactory {
         return new Deadline(description, formattedDeadline);
     }
 
+    /**
+     * Creates a new event
+     *
+     * @param input user input description, start and end time
+     * @return a new Event
+     * @throws FishException if no description, start or end time is provided, or message format is incorrect
+     */
     public static Task createEvent(String input) throws FishException {
         // get indices of "/from" and "/to"
         int eventFromPosition = input.indexOf("/from");
