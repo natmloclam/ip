@@ -3,6 +3,7 @@ package Fish.Parser;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import Fish.Helpers.FishException;
 import Fish.Helpers.FishMessages;
@@ -101,12 +102,14 @@ public class DateTimeParser {
      * @throws FishException if input is invalid
      */
     public static LocalDate parseDate(String input) throws FishException {
-        String data;
+        String formattedDate;
+        LocalDate outputDate;
         try {
-            data = dateFormatter(input);
-        } catch (FishException e) {
+            formattedDate = dateFormatter(input);
+            outputDate = LocalDate.parse(formattedDate);
+        } catch (FishException | DateTimeParseException e) {
             throw new FishException(FishMessages.INVALID_DATE_FORMAT);
         }
-        return LocalDate.parse(data);
+        return outputDate;
     }
 }
