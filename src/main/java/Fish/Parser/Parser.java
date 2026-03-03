@@ -23,11 +23,10 @@ public class Parser {
     public static final String COMMAND_DOBY = "doby";
 
     /**
-     * Extracts the command portion of the input sentence. Ignores additional
+     * Returns the command portion of the input sentence. Ignores additional
      * whitespaces around the command word. Command word is case-insensitive.
      *
      * @param sentence input from user
-     * @return command portion of the sentence
      */
     public static String filterCommand(String sentence) {
         String[] words = sentence.split(" ", 2);
@@ -35,11 +34,10 @@ public class Parser {
     }
 
     /**
-     * Extracts the argument portion of the input sentence. Ignores additional
+     * Returns the argument portion of the input sentence. Ignores additional
      * whitespaces at the start and end of the argument.
      *
      * @param sentence input from user
-     * @return argument portion of the sentence
      */
     public static String filterArg(String sentence) {
         String[] splitSentence = sentence.split(" ");
@@ -51,11 +49,8 @@ public class Parser {
     }
 
     /**
-     * Reads the input from the user and returns a Command object that corresponds
+     * Returns a Command object that corresponds
      * to the command that has been input.
-     *
-     * @param input input from the user
-     * @return the corresponding Command
      */
     public static Command parse(String input) {
         String command = filterCommand(input);

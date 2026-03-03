@@ -14,10 +14,9 @@ import Fish.Helpers.FishMessages;
 public class DateTimeParser {
 
     /**
-     * Extracts the date portion of the user input
+     * Returns the date portion of the user input
      *
      * @param input user input in the form of "yyyy-mm-dd HH:mm"
-     * @return date portion as a String
      */
     public static String filterDate(String input) {
         String[] words = input.split(" ", 2);
@@ -25,10 +24,9 @@ public class DateTimeParser {
     }
 
     /**
-     * Extracts the time portion of the user input
+     * Returns the time portion of the user input
      *
      * @param input user input in the form of "yyyy-mm-dd HH:mm"
-     * @return time portion as a String
      * @throws FishException if invalid date-time format was input
      */
     public static String filterTime(String input) throws FishException {
@@ -56,11 +54,10 @@ public class DateTimeParser {
     }
 
     /**
-     * Takes a LocalDateTime object and outputs a String in the form "MMM d yyyy, h:mma".
+     * Outputs date-time as a String in the form "MMM d yyyy, h:mma".
      * E.g: "2026-02-22T23:30" becomes "Feb 22 2026, 11:30pm".
      *
      * @param dateTime LocalDateTime object
-     * @return date-time in the "MMM d yyyy, h:mma" format as a String
      */
     public static String formatDateTimeOutput(LocalDateTime dateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy, h:mma");
@@ -68,11 +65,10 @@ public class DateTimeParser {
     }
 
     /**
-     * Takes a LocalDate object and outputs a String in the form "MMM d yyyy".
+     * Outputs date as a String in the form "MMM d yyyy".
      * E.g: "2026-02-22" becomes "Feb 22 2026".
      *
      * @param date LocalDate object
-     * @return date in the "MMM d yyyy" format as a String
      */
     public static String formatDateOutput(LocalDate date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy");
@@ -80,7 +76,7 @@ public class DateTimeParser {
     }
 
     /**
-     * Takes the user input and returns it as a LocalDateTime object. Input allows
+     * Returns user input as a LocalDateTime object. Input allows
      * for date and month to be single digits.
      *
      * @param input date-time in the form "yyyy-mm-dd HH:mm"
@@ -97,7 +93,7 @@ public class DateTimeParser {
     }
 
     /**
-     * Takes the user input and returns it as a LocalDate object. Input allows
+     * Returns user input as a LocalDate object. Input allows
      * for date and month to be single digits.
      *
      * @param input date-time in the form "yyyy-mm-dd"
