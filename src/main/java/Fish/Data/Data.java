@@ -28,6 +28,7 @@ public class Data {
 
     /**
      * Constructor for the Data class
+     *
      * @param filePath specifies the relative path of where the data file is to be stored
      */
     public Data(String filePath) {
@@ -35,8 +36,7 @@ public class Data {
     }
 
     /**
-     * Each line contains information about a single task. This method creates a new Task and
-     * stores it into tasks
+     * Creates a new Task and stores it into tasks
      *
      * @param tasks ArrayList of Task objects that stores info from the file
      * @param line Contains info of a single task
@@ -108,10 +108,7 @@ public class Data {
     }
 
     /**
-     * Load data stored in the filePath and returns an ArrayList of Tasks
-     * which contains the same info
-     *
-     * @return ArrayList of Tasks with the stored info
+     * Loads the data stored in the filePath and returns it an ArrayList of Tasks
      */
     public ArrayList<Task> load() {
         ArrayList<Task> tasks = new ArrayList<>();
@@ -125,7 +122,7 @@ public class Data {
     }
 
     /**
-     * Takes in an ArrayList of Tasks and stores the info into the filePath
+     * Stores the task list info into the filePath
      *
      * @param tasks - ArrayList of Tasks with the info to be stored
      * @throws FishException if unable to create directories for the filePath or if unable to write to file

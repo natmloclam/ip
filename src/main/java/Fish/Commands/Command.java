@@ -18,7 +18,7 @@ public abstract class Command {
     public abstract void execute(TaskList tasks, Data data) throws FishException;
 
     /**
-     * Method to check whether to keep Fish running. All commands
+     * Returns true to keep Fish running. All commands
      * other than ExitCommand will return true
      *
      * @return true to keep Fish running, false to exit

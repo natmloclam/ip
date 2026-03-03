@@ -12,7 +12,7 @@ import Fish.Parser.DateTimeParser;
  */
 public class TaskFactory {
     /**
-     * Creates the corresponding task based on the task type input by user
+     * Returns the corresponding task based on the task type input by user
      *
      * @param taskType type of task input by user
      * @param arg the information about the task
@@ -32,7 +32,7 @@ public class TaskFactory {
     }
 
     /**
-     * Creates a new todo
+     * Returns a new todo
      *
      * @param input user input description of the todo
      * @return a new Todo
@@ -46,7 +46,7 @@ public class TaskFactory {
     }
 
     /**
-     * Creates a new deadline
+     * Returns a new deadline
      *
      * @param input user input description and deadline
      * @return a new Deadline
@@ -81,7 +81,7 @@ public class TaskFactory {
     }
 
     /**
-     * Creates a new event
+     * Returns a new event
      *
      * @param input user input description, start and end time
      * @return a new Event

@@ -31,28 +31,21 @@ public class TaskList {
     }
 
     /**
-     * Getter for a specific task of index i in the task list
-     *
-     * @param i index of the task to return
-     * @return Task of index i in task list
+     * Returns task of index in the task list
      */
-    public Task getTask(int i) {
-        return tasks.get(i);
+    public Task getTask(int index) {
+        return tasks.get(index);
     }
 
     /**
-     * Getter for the full list of tasks
-     *
-     * @return ArrayList of Tasks in task list
+     * Returns list of tasks
      */
     public ArrayList<Task> getTasks() {
         return tasks;
     }
 
     /**
-     * Getter for task count
-     *
-     * @return size of task list
+     * Returns task count
      */
     public int getTaskCount() {
         return tasks.size();
@@ -61,8 +54,7 @@ public class TaskList {
     // ========= OPERATION METHODS ========= //
 
     /**
-     * Used to verify index input by user during mark, unmark and delete operations. Checks if input is an integer,
-     * and is within the valid range.
+     * Verifies index input by user during mark, unmark and delete operations
      *
      * @param arg user input
      * @param invalidTypeMessage Error message to be printed if user input is of invalid type
@@ -135,7 +127,7 @@ public class TaskList {
      * @param input user's task index
      * @return task list index
      */
-    public int getTaskIndex(String input) {
+    private int getTaskIndex(String input) {
         return Integer.parseInt(input) - 1;
     }
 
