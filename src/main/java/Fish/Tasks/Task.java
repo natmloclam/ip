@@ -19,7 +19,7 @@ public abstract class Task {
     }
 
     /**
-     * Task is marked with an "X" if the task is done
+     * Mark task with an "X" if the task is done
      *
      * @return a String "[X]" if {@code isDone == true}, "[ ]" otherwise
      */
@@ -28,18 +28,14 @@ public abstract class Task {
     }
 
     /**
-     * Getter method for description
-     *
-     * @return task description
+     * Returns description
      */
     public String getDescription() {
         return description;
     }
 
     /**
-     * Getter method for isDone
-     *
-     * @return boolean value of isDone
+     * Returns isDone
      */
     public boolean getIsDone() {
         return isDone;
@@ -53,7 +49,7 @@ public abstract class Task {
     public abstract String getType();
 
     /**
-     * Setter for isDone attribute
+     * Sets isDone attribute
      *
      * @param isDone desired value of the isDone attribute in the task
      */

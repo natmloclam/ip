@@ -21,7 +21,7 @@ public class Event extends Task{
     }
 
     /**
-     * Getter of start time
+     * Returns start time
      *
      * @return start time of event
      */
@@ -30,7 +30,7 @@ public class Event extends Task{
     }
 
     /**
-     * Getter of end time
+     * Returns end time
      *
      * @return end time of event
      */
@@ -39,9 +39,7 @@ public class Event extends Task{
     }
 
     /**
-     * Type of event is "E"
-     *
-     * @return "E"
+     * Returns type of event "E"
      */
     @Override
     public String getType() {
@@ -58,7 +56,7 @@ public class Event extends Task{
     }
 
     /**
-     * Outputs format which events are stored in the file as
+     * Returns format which events are stored in the file as
      *
      * @return Information of event in the form of "E | [isDone] | [description] | [start] | [end]"
      */

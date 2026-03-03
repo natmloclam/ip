@@ -14,9 +14,7 @@ public class Todo extends Task {
     }
 
     /**
-     * Type of Todo is "T"
-     *
-     * @return "T"
+     * Returns type of Todo "T"
      */
     @Override
     public String getType() {
@@ -34,7 +32,7 @@ public class Todo extends Task {
     }
 
     /**
-     * Outputs format which todos are stored in the file as
+     * Returns format which todos are stored in the file as
      *
      * @return Information of todo in the form of "T | [isDone] | [description]"
      */

@@ -23,9 +23,7 @@ public class Deadline extends Task{
     }
 
     /**
-     * Type of deadline is "D"
-     *
-     * @return "D"
+     * Returns type of deadline "D"
      */
     @Override
     public String getType() {
@@ -33,7 +31,7 @@ public class Deadline extends Task{
     }
 
     /**
-     * Gets deadline to be printed to the user
+     * Returns deadline to be printed to the user
      *
      * @return deadline in the format of "MMM d yyyy, h:mma"
      */
@@ -42,7 +40,7 @@ public class Deadline extends Task{
     }
 
     /**
-     * Gets date of the deadline
+     * Returns date of the deadline
      *
      * @return LocalDate representation of the date of deadline
      */
@@ -61,7 +59,7 @@ public class Deadline extends Task{
     }
 
     /**
-     * Outputs format which deadlines are stored in the file as
+     * Returns format which deadlines are stored in the file as
      *
      * @return Information of deadline in the form of "D | [isDone] | [description] | [deadline]"
      */
