@@ -140,7 +140,7 @@ public class TaskList {
     }
 
     /**
-     * Searches for tasks with descriptions which contain the input
+     * Returns ArrayList of tasks with descriptions which contain the input
      *
      * @param input user input filter term
      * @return list of tasks which contain the filter term
