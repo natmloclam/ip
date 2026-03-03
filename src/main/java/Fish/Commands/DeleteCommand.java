@@ -12,6 +12,7 @@ public class DeleteCommand extends Command {
 
     /**
      * Constructor of DeleteCommand class
+     *
      * @param arg contains index of task to delete
      */
     public DeleteCommand(String arg) {
